@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Digital Library Management System</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+
+        <h1>Digital Library</h1>
+
+        <nav>
+            <a href="#home">Home</a>
+            <a href="books.html">Books</a>
+            <a href="#categories">Categories</a>
+            <a href="#about">About</a>
+            <a href="login.html">Login</a>
+        </nav>
+
+    </header>
+
+
+    <main>
+
+        <!-- Hero Section -->
+        <section class="hero" id="home">
+
+            <h2>Discover Knowledge, Anytime, Anywhere</h2>
+
+            <p>
+                Explore books and digital resources from our online library.
+            </p>
+
+            <button onclick="exploreBooks()">
+                Explore Books
+            </button>
+
+        </section>
+
+
+        <!-- Search Section -->
+        <section class="search-section">
+
+            <h2>Find Your Next Book</h2>
+
+            <p>
+                Search our digital library for books and resources.
+            </p>
+
+            <div class="search-box">
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search for a book..."
+                >
+
+                <button onclick="searchBooks()">
+                    Search
+                </button>
+
+            </div>
+
+            <p id="searchResult"></p>
+
+        </section>
+
+
+        <!-- Featured Books Section -->
+        <section class="featured-books" id="books">
+
+            <h2>Featured Books</h2>
+
+            <p>
+                Explore some of our popular books.
+            </p>
+
+            <div class="book-container">
+
+
+                <!-- Book 1 -->
+                <div class="book-card">
+
+                    <div class="book-cover">
+                        📘
+                    </div>
+
+                    <h3>Python Programming</h3>
+
+                    <p>
+                        Learn Python from the basics.
+                    </p>
+
+                    <a href="book-details.html?book=python" class="view-book">
+                        View Book
+                    </a>
+
+                </div>
+
+
+                <!-- Book 2 -->
+                <div class="book-card">
+
+                    <div class="book-cover">
+                        📗
+                    </div>
+
+                    <h3>Web Development</h3>
+
+                    <p>
+                        Learn HTML, CSS and JavaScript.
+                    </p>
+
+                    <a href="book-details.html?book=web" class="view-book">
+                        View Book
+                    </a>
+
+                </div>
+
+
+                <!-- Book 3 -->
+                <div class="book-card">
+
+                    <div class="book-cover">
+                        📕
+                    </div>
+
+                    <h3>Data Science</h3>
+
+                    <p>
+                        Explore data analysis and visualization.
+                    </p>
+
+                    <a href="book-details.html?book=data" class="view-book">
+                        View Book
+                    </a>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- Categories Section -->
+        <section class="categories" id="categories">
+
+            <h2>Browse Categories</h2>
+
+            <p>
+                Explore books by category.
+            </p>
+
+            <div class="category-container">
+
+
+                <!-- Category 1 -->
+                <div class="category-card">
+
+                    <div class="category-icon">
+                        💻
+                    </div>
+
+                    <h3>Computer Science</h3>
+
+                    <p>
+                        Programming and technology books.
+                    </p>
+
+                </div>
+
+
+                <!-- Category 2 -->
+                <div class="category-card">
+
+                    <div class="category-icon">
+                        🤖
+                    </div>
+
+                    <h3>Artificial Intelligence</h3>
+
+                    <p>
+                        AI and machine learning resources.
+                    </p>
+
+                </div>
+
+
+                <!-- Category 3 -->
+                <div class="category-card">
+
+                    <div class="category-icon">
+                        📊
+                    </div>
+
+                    <h3>Data Science</h3>
+
+                    <p>
+                        Data analysis and visualization books.
+                    </p>
+
+                </div>
+
+
+                <!-- Category 4 -->
+                <div class="category-card">
+
+                    <div class="category-icon">
+                        🌐
+                    </div>
+
+                    <h3>Web Development</h3>
+
+                    <p>
+                        HTML, CSS, JavaScript and web books.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- Library Statistics Section -->
+        <section class="library-stats">
+
+            <h2>Our Library</h2>
+
+            <p>
+                Explore our growing digital library.
+            </p>
+
+            <div class="stats-container">
+
+                <div class="stat-card">
+
+                    <h3>1,000+</h3>
+
+                    <p>
+                        Books
+                    </p>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <h3>50+</h3>
+
+                    <p>
+                        Categories
+                    </p>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <h3>500+</h3>
+
+                    <p>
+                        Registered Users
+                    </p>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <h3>24/7</h3>
+
+                    <p>
+                        Access
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- About Section -->
+        <section class="about-section" id="about">
+
+            <h2>About Our Digital Library</h2>
+
+            <p>
+                Our Digital Library Management System provides
+                easy access to books and digital learning resources
+                anytime and anywhere.
+            </p>
+
+            <p>
+                Users can search for books, explore different
+                categories, and access library resources through
+                a simple and user-friendly platform.
+            </p>
+
+        </section>
+
+    </main>
+
+
+    <!-- Footer -->
+    <footer>
+
+        <div class="footer-content">
+
+
+            <!-- Footer Section 1 -->
+            <div class="footer-section">
+
+                <h3>Digital Library</h3>
+
+                <p>
+                    Your gateway to knowledge and digital resources.
+                </p>
+
+            </div>
+
+
+            <!-- Footer Section 2 -->
+            <div class="footer-section">
+
+                <h3>Quick Links</h3>
+
+                <a href="#home">Home</a>
+
+                <a href="books.html">Books</a>
+
+                <a href="#categories">Categories</a>
+
+                <a href="#about">About</a>
+
+            </div>
+
+
+            <!-- Footer Section 3 -->
+            <div class="footer-section">
+
+                <h3>Contact</h3>
+
+                <p>
+                    Email: library@example.com
+                </p>
+
+                <p>
+                    Phone: +91 98765 43210
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- Footer Bottom -->
+        <div class="footer-bottom">
+
+            <p>
+                © 2026 Digital Library Management System.
+                All rights reserved.
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+
+</body>
+
+</html>
