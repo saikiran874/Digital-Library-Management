@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Dashboard - Digital Library</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f7fb;
+            color: #1f2937;
+            min-height: 100vh;
+        }
+
+        /* =========================
+           NAVBAR
+           ========================= */
+
+        .navbar {
+            background: #153e68;
+            color: white;
+            padding: 18px 6%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-links a,
+        .nav-links button {
+            color: white;
+            text-decoration: none;
+            padding: 11px 18px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .logout-btn {
+            border: 1px solid rgba(255, 255, 255, 0.7) !important;
+        }
+
+        .logout-btn:hover {
+            background: white !important;
+            color: #153e68 !important;
+        }
+
+
+        /* =========================
+           MAIN CONTAINER
+           ========================= */
+
+        .dashboard-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 40px auto;
+        }
+
+
+        /* =========================
+           WELCOME SECTION
+           ========================= */
+
+        .welcome-section {
+            background: linear-gradient(
+                135deg,
+                #153e68,
+                #2166a5
+            );
+
+            color: white;
+            padding: 35px;
+            border-radius: 18px;
+            margin-bottom: 30px;
+
+            box-shadow:
+                0 8px 25px rgba(21, 62, 104, 0.2);
+        }
+
+        .welcome-section h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .welcome-section p {
+            font-size: 17px;
+            opacity: 0.9;
+        }
+
+
+        /* =========================
+           SECTION TITLE
+           ========================= */
+
+        .section-title {
+            font-size: 24px;
+            margin-bottom: 18px;
+            color: #153e68;
+        }
+
+
+        /* =========================
+           ACCOUNT CARD
+           ========================= */
+
+        .account-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 30px;
+
+            box-shadow:
+                0 5px 18px rgba(0, 0, 0, 0.08);
+
+            border-left: 5px solid #153e68;
+        }
+
+        .account-row {
+            display: grid;
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+        }
+
+        .account-item {
+            background: #f7f9fc;
+            padding: 18px;
+            border-radius: 12px;
+        }
+
+        .account-label {
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 7px;
+        }
+
+        .account-value {
+            font-size: 17px;
+            font-weight: bold;
+            color: #153e68;
+            word-break: break-word;
+        }
+
+        .role-badge {
+            display: inline-block;
+            background: #e8f1fb;
+            color: #153e68;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+
+
+        /* =========================
+           LIBRARY ACTIONS
+           ========================= */
+
+        .actions-grid {
+            display: grid;
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 22px;
+            margin-bottom: 30px;
+        }
+
+        .action-card {
+            background: white;
+            padding: 28px;
+            border-radius: 16px;
+
+            box-shadow:
+                0 5px 18px rgba(0, 0, 0, 0.08);
+
+            transition: 0.3s;
+        }
+
+        .action-card:hover {
+            transform: translateY(-5px);
+
+            box-shadow:
+                0 10px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .action-icon {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .action-card h3 {
+            font-size: 21px;
+            margin-bottom: 8px;
+            color: #153e68;
+        }
+
+        .action-card p {
+            color: #6b7280;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .action-btn {
+            display: inline-block;
+            text-decoration: none;
+            background: #153e68;
+            color: white;
+
+            padding: 12px 20px;
+            border-radius: 8px;
+
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .action-btn:hover {
+            background: #2166a5;
+            transform: translateY(-2px);
+        }
+
+
+        /* =========================
+           INFORMATION SECTION
+           ========================= */
+
+        .info-card {
+            background: white;
+            border-radius: 16px;
+            padding: 28px;
+
+            box-shadow:
+                0 5px 18px rgba(0, 0, 0, 0.08);
+
+            margin-bottom: 30px;
+        }
+
+        .info-card h2 {
+            color: #153e68;
+            margin-bottom: 15px;
+        }
+
+        .info-card p {
+            color: #5f6b7a;
+            line-height: 1.7;
+        }
+
+
+        /* =========================
+           FOOTER
+           ========================= */
+
+        footer {
+            background: #153e68;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+        }
+
+        footer p {
+            opacity: 0.9;
+        }
+
+
+        /* =========================
+           RESPONSIVE
+           ========================= */
+
+        @media (max-width: 800px) {
+
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .account-row {
+                grid-template-columns: 1fr;
+            }
+
+            .actions-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .welcome-section h1 {
+                font-size: 26px;
+            }
+        }
+
+
+        @media (max-width: 500px) {
+
+            .dashboard-container {
+                width: 94%;
+                margin: 25px auto;
+            }
+
+            .welcome-section {
+                padding: 25px;
+            }
+
+            .welcome-section h1 {
+                font-size: 24px;
+            }
+
+            .nav-links a,
+            .nav-links button {
+                font-size: 14px;
+                padding: 9px 12px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         NAVBAR
+         ========================= -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            📚 Digital Library
+        </div>
+
+        <div class="nav-links">
+
+            <a href="dashboard.html">
+                🏠 Dashboard
+            </a>
+
+            <a href="books.html">
+                📖 Browse Books
+            </a>
+
+            <a href="borrowed-books.html">
+                📚 My Borrowed Books
+            </a>
+
+            <button
+                class="logout-btn"
+                onclick="logoutUser()"
+            >
+                🚪 Logout
+            </button>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- =========================
+         MAIN DASHBOARD
+         ========================= -->
+
+    <main class="dashboard-container">
+
+
+        <!-- Welcome -->
+
+        <section class="welcome-section">
+
+            <h1>
+                Welcome back,
+                <span id="userName">User</span>! 👋
+            </h1>
+
+            <p>
+                Manage your digital library,
+                browse books and track your borrowed books.
+            </p>
+
+        </section>
+
+
+
+        <!-- Account Information -->
+
+        <h2 class="section-title">
+            👤 Account Information
+        </h2>
+
+        <section class="account-card">
+
+            <div class="account-row">
+
+
+                <div class="account-item">
+
+                    <div class="account-label">
+                        Name
+                    </div>
+
+                    <div
+                        class="account-value"
+                        id="dashboardName"
+                    >
+                        Loading...
+                    </div>
+
+                </div>
+
+
+
+                <div class="account-item">
+
+                    <div class="account-label">
+                        Email
+                    </div>
+
+                    <div
+                        class="account-value"
+                        id="dashboardEmail"
+                    >
+                        Loading...
+                    </div>
+
+                </div>
+
+
+
+                <div class="account-item">
+
+                    <div class="account-label">
+                        Account Type
+                    </div>
+
+                    <div
+                        class="account-value"
+                        id="dashboardRole"
+                    >
+                        Loading...
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- Library Actions -->
+
+        <h2 class="section-title">
+            📚 Library Actions
+        </h2>
+
+        <section class="actions-grid">
+
+
+            <!-- Browse Books -->
+
+            <div class="action-card">
+
+                <div class="action-icon">
+                    📖
+                </div>
+
+                <h3>
+                    Browse Books
+                </h3>
+
+                <p>
+                    Explore the available books
+                    in the digital library.
+                </p>
+
+                <a
+                    href="books.html"
+                    class="action-btn"
+                >
+                    Browse Books →
+                </a>
+
+            </div>
+
+
+
+            <!-- Borrowed Books -->
+
+            <div class="action-card">
+
+                <div class="action-icon">
+                    📚
+                </div>
+
+                <h3>
+                    My Borrowed Books
+                </h3>
+
+                <p>
+                    View the books you have borrowed
+                    and return them when you're done.
+                </p>
+
+                <a
+                    href="borrowed-books.html"
+                    class="action-btn"
+                >
+                    View My Books →
+                </a>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- Library Information -->
+
+        <section class="info-card">
+
+            <h2>
+                💡 Digital Library
+            </h2>
+
+            <p>
+                Welcome to your Digital Library Management System.
+                You can browse books, search for books, borrow
+                available books and manage your borrowed books
+                from your dashboard.
+            </p>
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =========================
+         FOOTER
+         ========================= -->
+
+    <footer>
+
+        <p>
+            © 2026 Digital Library Management System
+        </p>
+
+    </footer>
+
+
+
+    <!-- Existing JavaScript -->
+
+    <script src="script.js"></script>
+
+
+    <!-- Dashboard Protection -->
+
+    <script>
+
+        protectPage().then(function(isLoggedIn) {
+
+            if (isLoggedIn) {
+
+                loadDashboard();
+
+            }
+
+        });
+
+    </script>
+
+
+</body>
+
+</html>

@@ -52,155 +52,56 @@
         </section>
 
 
+        <!-- Category Filter -->
+        <section class="category-filter-section">
+
+            <label for="categoryFilter">
+                Filter Books by Category:
+            </label>
+
+            <select
+                id="categoryFilter"
+                onchange="filterBooks()"
+            >
+
+                <option value="all">
+                    All Categories
+                </option>
+
+                <option value="Computer Science">
+                    Computer Science
+                </option>
+
+                <option value="Web Development">
+                    Web Development
+                </option>
+
+                <option value="Data Science">
+                    Data Science
+                </option>
+
+                <option value="Artificial Intelligence">
+                    Artificial Intelligence
+                </option>
+
+            </select>
+
+        </section>
+
+
         <!-- All Books -->
         <section class="all-books">
 
-            <div class="books-container">
+            <div
+                class="books-container"
+                id="booksContainer"
+            >
 
+                <!-- Books will be loaded from MySQL -->
 
-                <!-- Book 1 -->
-                <div class="book-card">
-
-                    <div class="book-cover">
-                        📘
-                    </div>
-
-                    <h3>Python Programming</h3>
-
-                    <p>
-                        Learn Python programming from basics to advanced concepts.
-                    </p>
-
-                    <p class="book-category">
-                        Category: Computer Science
-                    </p>
-
-                    <a href="book-details.html?book=python" class="view-book">
-                        View Book
-                    </a>
-
-                </div>
-
-
-                <!-- Book 2 -->
-                <div class="book-card">
-
-                    <div class="book-cover">
-                        📗
-                    </div>
-
-                    <h3>Web Development</h3>
-
-                    <p>
-                        Learn HTML, CSS and JavaScript for modern websites.
-                    </p>
-
-                    <p class="book-category">
-                        Category: Web Development
-                    </p>
-
-                    <a href="book-details.html?book=web" class="view-book">
-                        View Book
-                    </a>
-
-                </div>
-
-
-                <!-- Book 3 -->
-                <div class="book-card">
-
-                    <div class="book-cover">
-                        📕
-                    </div>
-
-                    <h3>Data Science</h3>
-
-                    <p>
-                        Explore data analysis, visualization and data science.
-                    </p>
-
-                    <p class="book-category">
-                        Category: Data Science
-                    </p>
-
-                    <a href="book-details.html?book=data" class="view-book">
-                        View Book
-                    </a>
-
-                </div>
-
-
-                <!-- Book 4 -->
-                <div class="book-card">
-
-                    <div class="book-cover">
-                        🤖
-                    </div>
-
-                    <h3>Artificial Intelligence</h3>
-
-                    <p>
-                        Learn the fundamentals of AI and machine learning.
-                    </p>
-
-                    <p class="book-category">
-                        Category: Artificial Intelligence
-                    </p>
-
-                    <a href="book-details.html?book=ai" class="view-book">
-                        View Book
-                    </a>
-
-                </div>
-
-
-                <!-- Book 5 -->
-                <div class="book-card">
-
-                    <div class="book-cover">
-                        📙
-                    </div>
-
-                    <h3>Java Programming</h3>
-
-                    <p>
-                        Learn object-oriented programming using Java.
-                    </p>
-
-                    <p class="book-category">
-                        Category: Computer Science
-                    </p>
-
-                    <a href="book-details.html?book=java" class="view-book">
-                        View Book
-                    </a>
-
-                </div>
-
-
-                <!-- Book 6 -->
-                <div class="book-card">
-
-                    <div class="book-cover">
-                        📓
-                    </div>
-
-                    <h3>Database Management</h3>
-
-                    <p>
-                        Learn SQL, databases and database management concepts.
-                    </p>
-
-                    <p class="book-category">
-                        Category: Computer Science
-                    </p>
-
-                    <a href="book-details.html?book=database" class="view-book">
-                        View Book
-                    </a>
-
-                </div>
-
+                <p>
+                    Loading books...
+                </p>
 
             </div>
 
@@ -213,7 +114,6 @@
     <footer>
 
         <div class="footer-content">
-
 
             <!-- Footer Section 1 -->
             <div class="footer-section">
@@ -232,13 +132,21 @@
 
                 <h3>Quick Links</h3>
 
-                <a href="index.html">Home</a>
+                <a href="index.html">
+                    Home
+                </a>
 
-                <a href="books.html">Books</a>
+                <a href="books.html">
+                    Books
+                </a>
 
-                <a href="index.html#categories">Categories</a>
+                <a href="index.html#categories">
+                    Categories
+                </a>
 
-                <a href="index.html#about">About</a>
+                <a href="index.html#about">
+                    About
+                </a>
 
             </div>
 
@@ -258,7 +166,6 @@
 
             </div>
 
-
         </div>
 
 
@@ -274,6 +181,27 @@
 
     </footer>
 
+
+    <script src="script.js"></script>
+    <script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const params = new URLSearchParams(window.location.search);
+    const category = params.get("category");
+
+    const categoryFilter =
+        document.getElementById("categoryFilter");
+
+    if (category && categoryFilter) {
+
+        categoryFilter.value = category;
+
+        filterBooks();
+
+    }
+
+});
+</script>
 
 </body>
 

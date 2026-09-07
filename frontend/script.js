@@ -19,160 +19,175 @@ function exploreBooks() {
 
 function searchBooks() {
 
-    const searchInput = document.getElementById("searchInput");
+    const searchInput =
+        document.getElementById("searchInput");
 
-    if (!searchInput) {
+    const searchResult =
+        document.getElementById("searchResult");
+
+    if (!searchInput || !searchResult) {
         return;
     }
 
-    const searchText = searchInput.value.trim().toLowerCase();
-
-    const searchResult = document.getElementById("searchResult");
+    const searchText =
+        searchInput.value.trim().toLowerCase();
 
     if (searchText === "") {
 
-        if (searchResult) {
-            searchResult.innerHTML =
-                "Please enter a book name or topic.";
-        }
+        searchResult.innerHTML =
+            "Please enter a book name or topic.";
 
         return;
     }
 
-    const books = [
-        "Python Programming",
-        "Web Development",
-        "Data Science",
-        "Artificial Intelligence",
-        "Java Programming",
-        "Database Management"
-    ];
+    fetch("http://127.0.0.1:5000/books")
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(result) {
 
-    const result = books.filter(function(book) {
-        return book.toLowerCase().includes(searchText);
-    });
+            if (!result.success) {
 
-    if (searchResult) {
+                searchResult.innerHTML =
+                    "Unable to search books.";
 
-        if (result.length > 0) {
+                return;
+            }
 
-            searchResult.innerHTML =
-                "Book found: " + result.join(", ");
+            const books = result.books;
 
-        } else {
+            const matchedBooks =
+                books.filter(function(book) {
 
-            searchResult.innerHTML =
-                "No matching books found.";
-        }
-    }
-}
+                    return (
+                        book.title.toLowerCase().includes(searchText) ||
+                        book.author.toLowerCase().includes(searchText) ||
+                        (book.category &&
+                         book.category.toLowerCase().includes(searchText))
+                    );
+
+                });
 
 
-/* =========================================================
-   3. BOOK DETAILS
-   ========================================================= */
+            if (matchedBooks.length === 0) {
 
-function loadBookDetails() {
+                searchResult.innerHTML = `
+                    <p>
+                        No books found for
+                        "<strong>${searchText}</strong>"
+                    </p>
+                `;
 
-    const params = new URLSearchParams(window.location.search);
+                return;
+            }
 
-    const book = params.get("book");
 
-    const books = {
+            searchResult.innerHTML = `
+                <div class="search-results">
 
-        python: {
-            title: "Python Programming",
-            category: "Computer Science",
-            cover: "📘",
-            author: "Digital Library Team",
-            description:
-                "Learn Python programming from basics to advanced concepts."
-        },
+                    <h3>
+                        ${matchedBooks.length}
+                        book(s) found
+                    </h3>
 
-        web: {
-            title: "Web Development",
-            category: "Web Development",
-            cover: "📗",
-            author: "Digital Library Team",
-            description:
-                "Learn HTML, CSS and JavaScript for creating modern websites."
-        },
+                    <div class="book-container">
 
-        data: {
-            title: "Data Science",
-            category: "Data Science",
-            cover: "📕",
-            author: "Digital Library Team",
-            description:
-                "Explore data analysis, data visualization and important data science concepts."
-        },
+                        ${matchedBooks.map(function(book) {
 
-        ai: {
-            title: "Artificial Intelligence",
-            category: "Artificial Intelligence",
-            cover: "🤖",
-            author: "Digital Library Team",
-            description:
-                "Learn the fundamentals of Artificial Intelligence and machine learning."
-        },
+                            let bookKey = getBookKey(book.title);
 
-        java: {
-            title: "Java Programming",
-            category: "Computer Science",
-            cover: "📙",
-            author: "Digital Library Team",
-            description:
-                "Learn object-oriented programming and important Java programming concepts."
-        },
+                            return `
+                                <div class="book-card">
 
-        database: {
-            title: "Database Management",
-            category: "Computer Science",
-            cover: "📓",
-            author: "Digital Library Team",
-            description:
-                "Learn SQL, databases, tables, relationships and database management concepts."
-        }
-    };
+                                    <div class="book-cover">
+                                        📚
+                                    </div>
 
-    if (!book || !books[book]) {
-        return;
-    }
+                                    <h3>
+                                        ${book.title}
+                                    </h3>
 
-    const selectedBook = books[book];
+                                    <p>
+                                        Author:
+                                        ${book.author}
+                                    </p>
 
-    const title = document.getElementById("bookTitle");
-    const category = document.getElementById("bookCategory");
-    const cover = document.getElementById("bookCover");
-    const author = document.getElementById("bookAuthor");
-    const description = document.getElementById("bookDescription");
-    const readButton = document.getElementById("readBookButton");
+                                    <p>
+                                        Category:
+                                        ${book.category || "General"}
+                                    </p>
 
-    if (title) {
-        title.textContent = selectedBook.title;
-    }
+                                    <p>
+                                        ${book.description || ""}
+                                    </p>
 
-    if (category) {
-        category.textContent =
-            "Category: " + selectedBook.category;
-    }
+                                    <p>
+                                        Status:
+                                        <strong>
+                                            ${book.availability}
+                                        </strong>
+                                    </p>
 
-    if (cover) {
-        cover.textContent = selectedBook.cover;
-    }
+                                    <div class="book-buttons">
 
-    if (author) {
-        author.textContent = selectedBook.author;
-    }
+                                        <a
+                                            href="book-details.html?book=${bookKey}"
+                                            class="view-book"
+                                        >
+                                            View Book
+                                        </a>
 
-    if (description) {
-        description.textContent = selectedBook.description;
-    }
+                                        ${
+                                            book.availability === "Available"
+                                            ?
+                                            `
+                                            <button
+                                                class="view-book"
+                                                onclick="borrowBook(${book.book_id})"
+                                            >
+                                                Borrow Book
+                                            </button>
+                                            `
+                                            :
+                                            `
+                                            <button
+                                                class="view-book"
+                                                disabled
+                                            >
+                                                Book Borrowed
+                                            </button>
+                                            `
+                                        }
 
-    if (readButton) {
-        readButton.href =
-            "book-reader.html?book=" + book;
-    }
+                                    </div>
+
+                                </div>
+                            `;
+
+                        }).join("")}
+
+                    </div>
+
+                </div>
+            `;
+
+        })
+        .catch(function(error) {
+
+            console.error(
+                "Search Error:",
+                error
+            );
+
+            searchResult.innerHTML = `
+                <p>
+                    Unable to connect to the server.
+                    Please make sure Flask is running.
+                </p>
+            `;
+
+        });
+
 }
 
 
@@ -2950,7 +2965,151 @@ window.addEventListener(
     updateReadingProgress
 );
 
+/* =========================================================
+   BOOK DETAILS
+   ========================================================= */
 
+function loadBookDetails() {
+
+    const params =
+        new URLSearchParams(window.location.search);
+
+    const book =
+        params.get("book");
+
+    const books = {
+
+        python: {
+            title: "Python Programming",
+            category: "Computer Science",
+            cover: "🐍",
+            author: "Digital Library Team",
+            description:
+                "Learn Python programming from basics to advanced concepts."
+        },
+
+        web: {
+            title: "Web Development",
+            category: "Web Development",
+            cover: "🌐",
+            author: "Digital Library Team",
+            description:
+                "Learn HTML, CSS and JavaScript for creating modern websites."
+        },
+
+        data: {
+            title: "Data Science",
+            category: "Data Science",
+            cover: "📊",
+            author: "Digital Library Team",
+            description:
+                "Explore data analysis, data visualization and important data science concepts."
+        },
+
+        ai: {
+            title: "Artificial Intelligence",
+            category: "Artificial Intelligence",
+            cover: "🤖",
+            author: "Digital Library Team",
+            description:
+                "Learn the fundamentals of Artificial Intelligence and machine learning."
+        },
+
+        java: {
+            title: "Java Programming",
+            category: "Computer Science",
+            cover: "☕",
+            author: "Digital Library Team",
+            description:
+                "Learn object-oriented programming and important Java programming concepts."
+        },
+
+        database: {
+            title: "Database Management",
+            category: "Computer Science",
+            cover: "🗄️",
+            author: "Digital Library Team",
+            description:
+                "Learn SQL, databases, tables, relationships and database management concepts."
+        }
+
+    };
+
+
+    const selectedBook =
+        books[book];
+
+
+    if (!selectedBook) {
+
+        const title =
+            document.getElementById("bookTitle");
+
+        if (title) {
+            title.textContent = "Book Not Found";
+        }
+
+        return;
+    }
+
+
+    const title =
+        document.getElementById("bookTitle");
+
+    const category =
+        document.getElementById("bookCategory");
+
+    const cover =
+        document.getElementById("bookCover");
+
+    const author =
+        document.getElementById("bookAuthor");
+
+    const description =
+        document.getElementById("bookDescription");
+
+    const readButton =
+        document.getElementById("readBookButton");
+
+
+    if (title) {
+        title.textContent =
+            selectedBook.title;
+    }
+
+
+    if (category) {
+        category.textContent =
+            "Category: " + selectedBook.category;
+    }
+
+
+    if (cover) {
+        cover.textContent =
+            selectedBook.cover;
+    }
+
+
+    if (author) {
+        author.textContent =
+            selectedBook.author;
+    }
+
+
+    if (description) {
+        description.textContent =
+            selectedBook.description;
+    }
+
+
+    if (readButton) {
+
+        readButton.href =
+            "book-reader.html?book=" + book;
+
+    }
+
+}
 /* =========================================================
    13. PAGE LOAD
    ========================================================= */
@@ -3008,3 +3167,906 @@ document.addEventListener(
         updateReadingProgress();
     }
 );
+/* =========================================================
+   USER REGISTRATION
+   ========================================================= */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const registerForm =
+        document.getElementById("registerForm");
+
+    if (!registerForm) {
+        return;
+    }
+
+    registerForm.addEventListener("submit", async function (event) {
+
+        event.preventDefault();
+
+        const name =
+            document.getElementById("name").value.trim();
+
+        const email =
+            document.getElementById("registerEmail").value.trim();
+
+        const password =
+            document.getElementById("registerPassword").value;
+
+        const confirmPassword =
+            document.getElementById("confirmPassword").value;
+
+
+        /* Check passwords */
+
+        if (password !== confirmPassword) {
+
+            alert("Passwords do not match!");
+
+            return;
+        }
+
+
+        try {
+
+            const response = await fetch(
+                "http://127.0.0.1:5000/register",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        name: name,
+                        email: email,
+                        password: password
+                    })
+                }
+            );
+
+
+            const result = await response.json();
+
+
+            if (result.success) {
+
+                alert("Account created successfully!");
+
+                registerForm.reset();
+
+                window.location.href = "login.html";
+
+            } else {
+
+                alert(result.message);
+
+            }
+
+        } catch (error) {
+
+            console.error("Registration Error:", error);
+
+            alert(
+                "Unable to connect to the server. " +
+                "Please make sure Flask is running."
+            );
+
+        }
+
+    });
+
+});
+/* =========================================================
+   USER LOGIN
+   ========================================================= */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const loginForm =
+        document.getElementById("loginForm");
+
+    if (!loginForm) {
+        return;
+    }
+
+    loginForm.addEventListener("submit", async function (event) {
+
+        event.preventDefault();
+
+        const email =
+            document.getElementById("email").value.trim();
+
+        const password =
+            document.getElementById("password").value;
+
+        if (!email || !password) {
+            alert("Please enter email and password.");
+            return;
+        }
+
+        try {
+
+            const response = await fetch(
+                "http://127.0.0.1:5000/login",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        email: email,
+                        password: password
+                    })
+                }
+            );
+
+            const result = await response.json();
+
+            if (result.success) {
+
+                // Save logged-in user information
+                localStorage.setItem(
+                    "loggedInUser",
+                    JSON.stringify(result.user)
+                );
+
+                alert("Login successful!");
+
+                // Go to books page
+                window.location.href = "books.html";
+
+            } else {
+
+                alert(result.message);
+
+            }
+
+        } catch (error) {
+
+            console.error("Login Error:", error);
+
+            alert(
+                "Unable to connect to the server. " +
+                "Please make sure Flask is running."
+            );
+        }
+    });
+});
+/* =========================================================
+   LOAD BOOKS FROM MYSQL
+   ========================================================= */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const booksContainer =
+        document.getElementById("booksContainer");
+
+    if (!booksContainer) {
+        return;
+    }
+
+    loadBooks();
+
+});
+
+
+async function loadBooks() {
+
+    const booksContainer =
+        document.getElementById("booksContainer");
+
+    try {
+
+        const response = await fetch(
+            "http://127.0.0.1:5000/books"
+        );
+
+        const result = await response.json();
+
+        if (!result.success) {
+
+            booksContainer.innerHTML =
+                "<p>Unable to load books.</p>";
+
+            return;
+        }
+
+        booksContainer.innerHTML = "";
+
+        result.books.forEach(function (book) {
+
+            let bookKey = "";
+            let bookIcon = "📘";
+
+            if (book.title === "Python Programming") {
+
+                bookKey = "python";
+                bookIcon = "🐍";
+
+            } else if (book.title === "Web Development") {
+
+                bookKey = "web";
+                bookIcon = "🌐";
+
+            } else if (book.title === "Data Science") {
+
+                bookKey = "data";
+                bookIcon = "📊";
+
+            } else if (book.title === "Artificial Intelligence") {
+
+                bookKey = "ai";
+                bookIcon = "🤖";
+
+            } else if (book.title === "Java Programming") {
+
+                bookKey = "java";
+                bookIcon = "☕";
+
+            } else if (book.title === "Database Management") {
+
+                bookKey = "database";
+                bookIcon = "🗄️";
+
+            } else {
+
+                bookKey = book.book_id;
+            }
+
+
+            // ==============================
+            // Borrow Button
+            // ==============================
+
+            let borrowButton = "";
+
+            if (book.availability === "Available") {
+
+                borrowButton = `
+                    <button
+                        class="view-book"
+                        onclick="borrowBook(${book.book_id})"
+                    >
+                        Borrow Book
+                    </button>
+                `;
+
+            } else {
+
+                borrowButton = `
+                    <button
+                        class="view-book"
+                        disabled
+                    >
+                        Book Borrowed
+                    </button>
+                `;
+            }
+
+
+            // ==============================
+            // Create Book Card
+            // ==============================
+
+            const bookCard =
+                document.createElement("div");
+
+            bookCard.className = "book-card";
+
+            bookCard.innerHTML = `
+
+                <div class="book-cover">
+                    ${bookIcon}
+                </div>
+
+                <h3>
+                    ${book.title}
+                </h3>
+
+                <p>
+                    ${book.description || "No description available."}
+                </p>
+
+                <p class="book-category">
+                    Category: ${book.category || "General"}
+                </p>
+
+                <p>
+                    Author: ${book.author}
+                </p>
+
+                <p>
+                    Availability: ${book.availability}
+                </p>
+
+                <div class="book-buttons">
+
+                    <a
+                        href="book-details.html?book=${bookKey}"
+                        class="view-book"
+                    >
+                        View Book
+                    </a>
+
+                    ${borrowButton}
+
+                </div>
+
+            `;
+
+            booksContainer.appendChild(bookCard);
+
+        });
+
+    } catch (error) {
+
+        console.error("Books Error:", error);
+
+        booksContainer.innerHTML = `
+
+            <p>
+                Unable to connect to the server.
+                Please make sure Flask is running.
+            </p>
+
+        `;
+    }
+}
+
+
+// ==============================
+// Borrow Book
+// ==============================
+
+async function borrowBook(bookId) {
+
+    try {
+
+        const response = await fetch(
+            "http://127.0.0.1:5000/borrow",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    book_id: bookId
+                })
+            }
+        );
+
+        const result = await response.json();
+
+        if (result.success) {
+
+            alert(
+                "Book borrowed successfully!\n\n" +
+                result.book.title
+            );
+
+            // Reload books to update availability
+            loadBooks();
+
+        } else {
+
+            alert(result.message);
+        }
+
+    } catch (error) {
+
+        console.error("Borrow Error:", error);
+
+        alert(
+            "Unable to connect to the server. " +
+            "Please make sure Flask is running."
+        );
+    }
+}
+async function loadBorrowedBooks() {
+
+    const container =
+        document.getElementById("borrowedBooksContainer");
+
+    if (!container) {
+        return;
+    }
+
+    try {
+
+        const response = await fetch(
+            "http://127.0.0.1:5000/my-borrowed-books"
+        );
+
+        const result = await response.json();
+
+        if (!result.success) {
+
+            container.innerHTML = `
+                <p>${result.message}</p>
+            `;
+
+            return;
+        }
+
+        if (result.books.length === 0) {
+
+            container.innerHTML = `
+                <p>You have not borrowed any books yet.</p>
+            `;
+
+            return;
+        }
+
+        container.innerHTML = "";
+
+        result.books.forEach(function (book) {
+
+            const bookCard =
+                document.createElement("div");
+
+            bookCard.className = "book-card";
+
+            bookCard.innerHTML = `
+
+                <div class="book-cover">
+                    📚
+                </div>
+
+                <h3>
+                    ${book.title}
+                </h3>
+
+                <p>
+                    Author: ${book.author}
+                </p>
+
+                <p>
+                    Category: ${book.category || "General"}
+                </p>
+
+                <p>
+                    Borrowed Date:
+                    ${new Date(book.borrowed_date).toLocaleString()}
+                </p>
+
+                <p>
+                    Status: ${book.status}
+                </p>
+
+                <div class="book-buttons">
+
+                    <a
+                        href="book-details.html?book=${getBookKey(book.title)}"
+                        class="view-book"
+                    >
+                        View Book
+                    </a>
+
+                    <button
+                        class="view-book"
+                        onclick="returnBook(${book.book_id})"
+                    >
+                        Return Book
+                    </button>
+
+                </div>
+
+            `;
+
+            container.appendChild(bookCard);
+
+        });
+
+    } catch (error) {
+
+        console.error(
+            "Borrowed Books Error:",
+            error
+        );
+
+        container.innerHTML = `
+            <p>
+                Unable to connect to the server.
+                Please make sure Flask is running.
+            </p>
+        `;
+    }
+}
+
+
+function getBookKey(title) {
+
+    if (!title) {
+        return "";
+    }
+
+    const bookTitle =
+        title.trim().toLowerCase();
+
+    if (bookTitle === "python programming") {
+        return "python";
+    }
+
+    if (bookTitle === "web development") {
+        return "web";
+    }
+
+    if (bookTitle === "data science") {
+        return "data";
+    }
+
+    if (bookTitle === "artificial intelligence") {
+        return "ai";
+    }
+
+    if (bookTitle === "java programming") {
+        return "java";
+    }
+
+    if (bookTitle === "database management") {
+        return "database";
+    }
+
+    return "";
+}
+
+async function returnBook(bookId) {
+
+    const confirmReturn =
+        confirm("Do you want to return this book?");
+
+    if (!confirmReturn) {
+        return;
+    }
+
+    try {
+
+        const response = await fetch(
+            "http://127.0.0.1:5000/return-book",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    book_id: bookId
+                })
+            }
+        );
+
+        const result = await response.json();
+
+        if (result.success) {
+
+            alert(
+                "Book returned successfully!"
+            );
+
+            loadBorrowedBooks();
+
+        } else {
+
+            alert(result.message);
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Return Book Error:",
+            error
+        );
+
+        alert(
+            "Unable to connect to the server. " +
+            "Please make sure Flask is running."
+        );
+    }
+}
+async function loadDashboard() {
+
+    try {
+
+        const response = await fetch(
+            "http://127.0.0.1:5000/session"
+        );
+
+        const result = await response.json();
+
+        if (!result.logged_in) {
+
+            alert(
+                "Please login first."
+            );
+
+            window.location.href =
+                "login.html";
+
+            return;
+        }
+
+        document.getElementById(
+            "userName"
+        ).textContent =
+            result.user.name;
+
+        document.getElementById(
+            "dashboardName"
+        ).textContent =
+            result.user.name;
+
+        document.getElementById(
+            "dashboardEmail"
+        ).textContent =
+            result.user.email;
+
+        document.getElementById(
+            "dashboardRole"
+        ).textContent =
+            result.user.role;
+
+    } catch (error) {
+
+        console.error(
+            "Dashboard Error:",
+            error
+        );
+
+        alert(
+            "Unable to connect to the server."
+        );
+
+    }
+
+}
+
+
+async function logoutUser() {
+
+    try {
+
+        const response = await fetch(
+            "http://127.0.0.1:5000/logout",
+            {
+                method: "POST"
+            }
+        );
+
+        const result =
+            await response.json();
+
+        if (result.success) {
+
+            alert(
+                "Logged out successfully!"
+            );
+
+            window.location.href =
+                "login.html";
+
+        } else {
+
+            alert(
+                result.message
+            );
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Logout Error:",
+            error
+        );
+
+        alert(
+            "Unable to connect to the server."
+        );
+
+    }
+
+}
+function filterBooks() {
+
+    const filter =
+        document.getElementById("categoryFilter").value;
+
+    const bookCards =
+        document.querySelectorAll(
+            "#booksContainer .book-card"
+        );
+
+    bookCards.forEach(function(card) {
+
+        const categoryElement =
+            card.querySelector(".book-category");
+
+        if (!categoryElement) {
+            return;
+        }
+
+        const category =
+            categoryElement.textContent
+                .replace("Category:", "")
+                .trim();
+
+        if (
+            filter === "all" ||
+            category.toLowerCase() ===
+            filter.toLowerCase()
+        ) {
+
+            card.style.display = "";
+
+        } else {
+
+            card.style.display = "none";
+
+        }
+
+    });
+}
+/* =========================================================
+   21. CATEGORY FILTER
+   ========================================================= */
+
+function filterBooks() {
+
+    const categoryFilter =
+        document.getElementById("categoryFilter");
+
+    const booksContainer =
+        document.getElementById("booksContainer");
+
+    if (!categoryFilter || !booksContainer) {
+        return;
+    }
+
+    const selectedCategory =
+        categoryFilter.value.toLowerCase();
+
+    const bookCards =
+        booksContainer.querySelectorAll(".book-card");
+
+    let visibleBooks = 0;
+
+    bookCards.forEach(function(card) {
+
+        const categoryElement =
+            card.querySelector(".book-category");
+
+        if (!categoryElement) {
+            return;
+        }
+
+        const category =
+            categoryElement.textContent
+                .replace("Category:", "")
+                .trim()
+                .toLowerCase();
+
+        if (
+            selectedCategory === "all" ||
+            category === selectedCategory
+        ) {
+
+            card.style.display = "";
+
+            visibleBooks++;
+
+        } else {
+
+            card.style.display = "none";
+
+        }
+
+    });
+
+
+    let noResults =
+        document.getElementById("noCategoryResults");
+
+
+    if (visibleBooks === 0) {
+
+        if (!noResults) {
+
+            noResults =
+                document.createElement("p");
+
+            noResults.id =
+                "noCategoryResults";
+
+            noResults.textContent =
+                "No books found in this category.";
+
+            booksContainer.appendChild(noResults);
+        }
+
+    } else {
+
+        if (noResults) {
+            noResults.remove();
+        }
+
+    }
+
+}
+/* =========================================================
+   22. LOGIN PROTECTION
+   ========================================================= */
+
+async function protectPage() {
+
+    try {
+
+        const response = await fetch(
+            "http://127.0.0.1:5000/session"
+        );
+
+        const result = await response.json();
+
+        if (!result.logged_in) {
+
+            alert("Please login first.");
+
+            window.location.href = "login.html";
+
+            return false;
+        }
+
+        return true;
+
+    } catch (error) {
+
+        console.error(
+            "Session Check Error:",
+            error
+        );
+
+        alert(
+            "Unable to connect to the server."
+        );
+
+        return false;
+    }
+}
+/* =========================================================
+   AUTO LOAD BOOK DETAILS AND BOOK READER
+   ========================================================= */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    // Book Details Page
+    if (
+        document.getElementById("bookTitle") &&
+        document.getElementById("readBookButton")
+    ) {
+        loadBookDetails();
+    }
+
+
+    // Book Reader Page
+    if (
+        document.getElementById("chapterContent") &&
+        document.getElementById("readerTitle")
+    ) {
+        loadBookReader();
+    }
+
+});
+function openCategory(category) {
+
+    window.location.href =
+        "books.html?category=" +
+        encodeURIComponent(category);
+
+}

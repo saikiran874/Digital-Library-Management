@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>My Borrowed Books</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <header>
+
+        <h1>My Borrowed Books</h1>
+
+        <a href="books.html" class="view-book">
+            Browse Books
+        </a>
+
+    </header>
+
+
+    <main>
+
+        <section class="books-section">
+
+            <h2>Books You Have Borrowed</h2>
+
+            <div id="borrowedBooksContainer">
+
+                <p>Loading borrowed books...</p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+   <script src="script.js"></script>
+
+<script>
+    protectPage().then(function(isLoggedIn) {
+
+        if (isLoggedIn) {
+            loadBorrowedBooks();
+        }
+
+    });
+</script>
+
+</body>
+
+</html>

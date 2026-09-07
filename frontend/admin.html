@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Admin - Digital Library</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        .navbar {
+            background: #01375A;
+            color: white;
+            padding: 18px 40px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar h1 {
+            font-size: 24px;
+        }
+
+        .navbar-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav-btn {
+            background: white;
+            color: #01375A;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .nav-btn:hover {
+            opacity: 0.9;
+        }
+
+        .container {
+            width: 92%;
+            max-width: 1200px;
+            margin: 30px auto;
+        }
+
+        .page-title {
+            margin-bottom: 25px;
+        }
+
+        .page-title h2 {
+            color: #01375A;
+            margin-bottom: 8px;
+        }
+
+        .page-title p {
+            color: #666;
+        }
+
+        /* Add/Edit Form */
+
+        .book-form-section {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+        }
+
+        .book-form-section h3 {
+            color: #01375A;
+            margin-bottom: 20px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            margin-bottom: 7px;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            padding: 11px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-buttons {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 11px 18px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btn-primary {
+            background: #01375A;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #777;
+            color: white;
+        }
+
+        .btn-danger {
+            background: #d9534f;
+            color: white;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        /* Books */
+
+        .books-section {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .books-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .books-header h3 {
+            color: #01375A;
+        }
+
+        .refresh-btn {
+            background: #00BCD4;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 13px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background: #01375A;
+            color: white;
+        }
+
+        tr:hover {
+            background: #f8f8f8;
+        }
+
+        .availability {
+            font-weight: bold;
+        }
+
+        .available {
+            color: green;
+        }
+
+        .borrowed {
+            color: #d9534f;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 7px;
+        }
+
+        .edit-btn {
+            background: #82B74B;
+            color: white;
+            border: none;
+            padding: 7px 11px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .delete-btn {
+            background: #d9534f;
+            color: white;
+            border: none;
+            padding: 7px 11px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .message {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 6px;
+            display: none;
+        }
+
+        .success-message {
+            background: #dff0d8;
+            color: #3c763d;
+        }
+
+        .error-message {
+            background: #f2dede;
+            color: #a94442;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 25px;
+            color: #666;
+        }
+
+        @media (max-width: 700px) {
+
+            .navbar {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .container {
+                width: 95%;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full {
+                grid-column: auto;
+            }
+
+            .books-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+
+        <h1>📚 Digital Library - Admin</h1>
+
+        <div class="navbar-buttons">
+
+            <button class="nav-btn"
+                    onclick="goToDashboard()">
+                Dashboard
+            </button>
+
+            <button class="nav-btn"
+                    onclick="logoutAdmin()">
+                Logout
+            </button>
+
+        </div>
+
+    </nav>
+
+
+    <!-- MAIN -->
+
+    <main class="container">
+
+        <div class="page-title">
+
+            <h2>Admin Book Management</h2>
+
+            <p>
+                Add, edit, delete and manage library books.
+            </p>
+
+        </div>
+
+
+        <!-- ADD / EDIT BOOK -->
+
+        <section class="book-form-section">
+
+            <h3 id="formTitle">
+                ➕ Add New Book
+            </h3>
+
+            <form id="bookForm">
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+
+                        <label for="bookTitle">
+                            Book Title
+                        </label>
+
+                        <input
+                            type="text"
+                            id="bookTitle"
+                            placeholder="Enter book title"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="bookAuthor">
+                            Author
+                        </label>
+
+                        <input
+                            type="text"
+                            id="bookAuthor"
+                            placeholder="Enter author name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="bookCategory">
+                            Category
+                        </label>
+
+                        <select id="bookCategory">
+
+                            <option value="">
+                                Select Category
+                            </option>
+
+                            <option value="Computer Science">
+                                Computer Science
+                            </option>
+
+                            <option value="Web Development">
+                                Web Development
+                            </option>
+
+                            <option value="Data Science">
+                                Data Science
+                            </option>
+
+                            <option value="Artificial Intelligence">
+                                Artificial Intelligence
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="bookDescription">
+                            Description
+                        </label>
+
+                        <textarea
+                            id="bookDescription"
+                            placeholder="Enter book description"
+                        ></textarea>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-buttons">
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                        id="saveBookButton">
+                        Add Book
+                    </button>
+
+                    <button
+                        type="button"
+                        class="btn btn-secondary"
+                        id="cancelEditButton"
+                        onclick="cancelEdit()"
+                        style="display: none;">
+                        Cancel Edit
+                    </button>
+
+                </div>
+
+            </form>
+
+
+            <div
+                id="formMessage"
+                class="message">
+            </div>
+
+        </section>
+
+
+        <!-- BOOK LIST -->
+
+        <section class="books-section">
+
+            <div class="books-header">
+
+                <h3>📖 All Books</h3>
+
+                <button
+                    class="refresh-btn"
+                    onclick="loadAdminBooks()">
+                    🔄 Refresh
+                </button>
+
+            </div>
+
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>ID</th>
+
+                            <th>Title</th>
+
+                            <th>Author</th>
+
+                            <th>Category</th>
+
+                            <th>Availability</th>
+
+                            <th>Actions</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="booksTableBody">
+
+                        <tr>
+
+                            <td
+                                colspan="6"
+                                class="loading">
+                                Loading books...
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script src="admin.js"></script>
+
+</body>
+
+</html>
