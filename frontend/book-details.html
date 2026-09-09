@@ -2,220 +2,130 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Book Details - Digital Library</title>
-
     <link rel="stylesheet" href="style.css">
-
 </head>
-
 
 <body>
 
-    <!-- Header -->
+    <!-- Header / Navbar -->
     <header>
+        <a href="index.html" class="logo-link">
+            <span class="logo-badge">📚</span>
+            <h1>Digital Library</h1>
+        </a>
 
-        <h1>Digital Library</h1>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle Navigation">
+            ☰
+        </button>
 
-        <nav>
-
+        <nav id="mainNav">
             <a href="index.html">Home</a>
-
-            <a href="books.html">Books</a>
-
+            <a href="books.html" class="active">Books</a>
             <a href="index.html#categories">Categories</a>
-
             <a href="index.html#about">About</a>
-
-            <a href="login.html">Login</a>
-
+            <a href="login.html" class="nav-cta" id="navAuthBtn">Login</a>
         </nav>
-
     </header>
 
+    <main>
+        <!-- Book Details Section -->
+        <section class="book-details">
+            <div class="book-details-container">
 
-    <!-- Book Details -->
-    <section class="book-details">
-
-        <div class="book-details-container">
-
-
-            <!-- Book Cover -->
-            <div class="book-details-cover" id="bookCover">
-
-                📘
-
-            </div>
-
-
-            <!-- Book Information -->
-            <div class="book-details-info">
-
-                <h2 id="bookTitle">
-                    Python Programming
-                </h2>
-
-
-                <p class="book-category" id="bookCategory">
-
-                    Category: Computer Science
-
-                </p>
-
-
-                <p id="bookDescription">
-
-                    Learn Python programming from basics to
-                    advanced concepts.
-
-                </p>
-
-
-                <!-- Book Information -->
-                <div class="book-info-box">
-
-                    <p>
-
-                        <strong>Author:</strong>
-
-                        <span id="bookAuthor">
-                            Digital Library Team
-                        </span>
-
-                    </p>
-
-
-                    <p>
-
-                        <strong>Language:</strong>
-
-                        English
-
-                    </p>
-
-
-                    <p>
-
-                        <strong>Availability:</strong>
-
-                        Available
-
-                    </p>
-
+                <!-- Book Cover Visual -->
+                <div class="book-details-cover" id="bookCover">
+                    📘
                 </div>
 
+                <!-- Book Information & Actions -->
+                <div class="book-details-info">
+                    <span class="book-category" id="bookCategory">
+                        Category: General
+                    </span>
 
-                <!-- Read Book Button -->
-                <a href="#" class="read-book" id="readBookButton">
+                    <h2 id="bookTitle">
+                        Loading Book...
+                    </h2>
 
-                    Read Book
+                    <p id="bookDescription">
+                        Detailed book information is loading.
+                    </p>
 
-                </a>
+                    <!-- Meta Information Box -->
+                    <div class="book-info-box">
+                        <div>
+                            <strong>Author</strong>
+                            <span id="bookAuthor">Digital Library Team</span>
+                        </div>
 
+                        <div>
+                            <strong>Format</strong>
+                            <span>Digital E-Book</span>
+                        </div>
 
-                <!-- Back to Books -->
-                <a href="books.html" class="back-books">
+                        <div>
+                            <strong>Language</strong>
+                            <span>English</span>
+                        </div>
 
-                    ← Back to Books
+                        <div>
+                            <strong>Availability</strong>
+                            <span class="badge-available">Available</span>
+                        </div>
+                    </div>
 
-                </a>
+                    <!-- Action Buttons -->
+                    <div style="display: flex; gap: 14px; flex-wrap: wrap; align-items: center;">
+                        <a href="#" class="read-book" id="readBookButton">
+                            📖 Read Book Online
+                        </a>
+
+                        <a href="books.html" class="back-books">
+                            ← Back to Books
+                        </a>
+                    </div>
+                </div>
 
             </div>
-
-        </div>
-
-    </section>
-
+        </section>
+    </main>
 
     <!-- Footer -->
     <footer>
-
         <div class="footer-content">
-
-
-            <!-- Footer Section 1 -->
             <div class="footer-section">
-
-                <h3>Digital Library</h3>
-
+                <h3>📚 Digital Library</h3>
                 <p>
-
-                    Your gateway to knowledge and digital resources.
-
+                    Your gateway to knowledge and digital learning. Explore, borrow, and read books seamlessly on any device.
                 </p>
-
             </div>
 
-
-            <!-- Footer Section 2 -->
             <div class="footer-section">
-
-                <h3>Quick Links</h3>
-
-                <a href="index.html">
-                    Home
-                </a>
-
-                <a href="books.html">
-                    Books
-                </a>
-
-                <a href="index.html#categories">
-                    Categories
-                </a>
-
-                <a href="index.html#about">
-                    About
-                </a>
-
+                <h3>Quick Navigation</h3>
+                <a href="index.html">Home</a>
+                <a href="books.html">Browse Books</a>
+                <a href="index.html#categories">Categories</a>
+                <a href="index.html#about">About Platform</a>
             </div>
 
-
-            <!-- Footer Section 3 -->
             <div class="footer-section">
-
-                <h3>Contact</h3>
-
-                <p>
-
-                    Email: library@example.com
-
-                </p>
-
-                <p>
-
-                    Phone: +91 98765 43210
-
-                </p>
-
+                <h3>Contact & Support</h3>
+                <p>Email: library@example.com</p>
+                <p>Phone: +91 98765 43210</p>
+                <p>Campus Center, Knowledge Ave.</p>
             </div>
-
-
         </div>
 
-
-        <!-- Footer Bottom -->
         <div class="footer-bottom">
-
-            <p>
-
-                © 2026 Digital Library Management System.
-                All rights reserved.
-
-            </p>
-
+            <p>© 2026 Digital Library Management System. All rights reserved.</p>
         </div>
-
     </footer>
-
 
     <!-- JavaScript -->
     <script src="script.js"></script>
-
 </body>
 
 </html>

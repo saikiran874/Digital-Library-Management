@@ -4,77 +4,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Login - Digital Library</title>
-
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <!-- Login Page -->
     <section class="login-page">
-
         <div class="login-container">
+            <a href="index.html" style="text-decoration: none;">
+                <div style="font-size: 2.5rem; margin-bottom: 8px;">📚</div>
+                <h1>Digital Library</h1>
+            </a>
 
-            <h1>Digital Library</h1>
-
-            <h2>Login</h2>
-
-            <p>Login to access your library account.</p>
-
+            <h2>Welcome Back</h2>
+            <p>Enter your credentials to access your library account.</p>
 
             <!-- Login Form -->
             <form id="loginForm">
-
                 <label for="email">
-                    Email
+                    Email Address
                 </label>
-
                 <input
                     type="email"
                     id="email"
-                    placeholder="Enter your email"
+                    placeholder="e.g. user@example.com"
+                    autocomplete="email"
                     required
                 >
-
 
                 <label for="password">
                     Password
                 </label>
-
                 <input
                     type="password"
                     id="password"
                     placeholder="Enter your password"
+                    autocomplete="current-password"
                     required
                 >
 
-
                 <button type="submit">
-                    Login
+                    Sign In to Account
                 </button>
-
             </form>
 
-
             <p class="register-text">
-                Don't have an account?
-                <a href="register.html">Register</a>
+                Don't have an account yet?
+                <a href="register.html">Create an Account</a>
             </p>
 
-
             <a href="index.html" class="back-home">
-                ← Back to Home
+                ← Back to Home Page
             </a>
-
         </div>
-
     </section>
 
-
+    <!-- JavaScript -->
     <script src="script.js"></script>
-
 </body>
 
 </html>

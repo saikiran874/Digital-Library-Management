@@ -3,614 +3,166 @@
 
 <head>
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>Dashboard - Digital Library</title>
-
-    <style>
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background: #f4f7fb;
-            color: #1f2937;
-            min-height: 100vh;
-        }
-
-        /* =========================
-           NAVBAR
-           ========================= */
-
-        .navbar {
-            background: #153e68;
-            color: white;
-            padding: 18px 6%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
-        }
-
-        .logo {
-            font-size: 28px;
-            font-weight: bold;
-            letter-spacing: 0.5px;
-        }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .nav-links a,
-        .nav-links button {
-            color: white;
-            text-decoration: none;
-            padding: 11px 18px;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            border: none;
-            background: transparent;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .nav-links a:hover {
-            background: rgba(255, 255, 255, 0.12);
-        }
-
-        .logout-btn {
-            border: 1px solid rgba(255, 255, 255, 0.7) !important;
-        }
-
-        .logout-btn:hover {
-            background: white !important;
-            color: #153e68 !important;
-        }
-
-
-        /* =========================
-           MAIN CONTAINER
-           ========================= */
-
-        .dashboard-container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 40px auto;
-        }
-
-
-        /* =========================
-           WELCOME SECTION
-           ========================= */
-
-        .welcome-section {
-            background: linear-gradient(
-                135deg,
-                #153e68,
-                #2166a5
-            );
-
-            color: white;
-            padding: 35px;
-            border-radius: 18px;
-            margin-bottom: 30px;
-
-            box-shadow:
-                0 8px 25px rgba(21, 62, 104, 0.2);
-        }
-
-        .welcome-section h1 {
-            font-size: 32px;
-            margin-bottom: 10px;
-        }
-
-        .welcome-section p {
-            font-size: 17px;
-            opacity: 0.9;
-        }
-
-
-        /* =========================
-           SECTION TITLE
-           ========================= */
-
-        .section-title {
-            font-size: 24px;
-            margin-bottom: 18px;
-            color: #153e68;
-        }
-
-
-        /* =========================
-           ACCOUNT CARD
-           ========================= */
-
-        .account-card {
-            background: white;
-            border-radius: 16px;
-            padding: 25px;
-            margin-bottom: 30px;
-
-            box-shadow:
-                0 5px 18px rgba(0, 0, 0, 0.08);
-
-            border-left: 5px solid #153e68;
-        }
-
-        .account-row {
-            display: grid;
-            grid-template-columns:
-                repeat(3, 1fr);
-
-            gap: 20px;
-        }
-
-        .account-item {
-            background: #f7f9fc;
-            padding: 18px;
-            border-radius: 12px;
-        }
-
-        .account-label {
-            color: #6b7280;
-            font-size: 14px;
-            margin-bottom: 7px;
-        }
-
-        .account-value {
-            font-size: 17px;
-            font-weight: bold;
-            color: #153e68;
-            word-break: break-word;
-        }
-
-        .role-badge {
-            display: inline-block;
-            background: #e8f1fb;
-            color: #153e68;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-        }
-
-
-        /* =========================
-           LIBRARY ACTIONS
-           ========================= */
-
-        .actions-grid {
-            display: grid;
-            grid-template-columns:
-                repeat(2, 1fr);
-
-            gap: 22px;
-            margin-bottom: 30px;
-        }
-
-        .action-card {
-            background: white;
-            padding: 28px;
-            border-radius: 16px;
-
-            box-shadow:
-                0 5px 18px rgba(0, 0, 0, 0.08);
-
-            transition: 0.3s;
-        }
-
-        .action-card:hover {
-            transform: translateY(-5px);
-
-            box-shadow:
-                0 10px 25px rgba(0, 0, 0, 0.12);
-        }
-
-        .action-icon {
-            font-size: 42px;
-            margin-bottom: 15px;
-        }
-
-        .action-card h3 {
-            font-size: 21px;
-            margin-bottom: 8px;
-            color: #153e68;
-        }
-
-        .action-card p {
-            color: #6b7280;
-            line-height: 1.5;
-            margin-bottom: 20px;
-        }
-
-        .action-btn {
-            display: inline-block;
-            text-decoration: none;
-            background: #153e68;
-            color: white;
-
-            padding: 12px 20px;
-            border-radius: 8px;
-
-            font-weight: bold;
-            transition: 0.3s;
-        }
-
-        .action-btn:hover {
-            background: #2166a5;
-            transform: translateY(-2px);
-        }
-
-
-        /* =========================
-           INFORMATION SECTION
-           ========================= */
-
-        .info-card {
-            background: white;
-            border-radius: 16px;
-            padding: 28px;
-
-            box-shadow:
-                0 5px 18px rgba(0, 0, 0, 0.08);
-
-            margin-bottom: 30px;
-        }
-
-        .info-card h2 {
-            color: #153e68;
-            margin-bottom: 15px;
-        }
-
-        .info-card p {
-            color: #5f6b7a;
-            line-height: 1.7;
-        }
-
-
-        /* =========================
-           FOOTER
-           ========================= */
-
-        footer {
-            background: #153e68;
-            color: white;
-            text-align: center;
-            padding: 20px;
-            margin-top: 50px;
-        }
-
-        footer p {
-            opacity: 0.9;
-        }
-
-
-        /* =========================
-           RESPONSIVE
-           ========================= */
-
-        @media (max-width: 800px) {
-
-            .navbar {
-                flex-direction: column;
-                gap: 15px;
-            }
-
-            .nav-links {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-
-            .account-row {
-                grid-template-columns: 1fr;
-            }
-
-            .actions-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .welcome-section h1 {
-                font-size: 26px;
-            }
-        }
-
-
-        @media (max-width: 500px) {
-
-            .dashboard-container {
-                width: 94%;
-                margin: 25px auto;
-            }
-
-            .welcome-section {
-                padding: 25px;
-            }
-
-            .welcome-section h1 {
-                font-size: 24px;
-            }
-
-            .nav-links a,
-            .nav-links button {
-                font-size: 14px;
-                padding: 9px 12px;
-            }
-
-        }
-
-    </style>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Member Dashboard - Digital Library</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 
 <body>
 
+    <!-- Header / Navbar -->
+    <header>
+        <a href="index.html" class="logo-link">
+            <span class="logo-badge">📚</span>
+            <h1>Digital Library</h1>
+        </a>
 
-    <!-- =========================
-         NAVBAR
-         ========================= -->
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle Navigation">
+            ☰
+        </button>
 
-    <nav class="navbar">
-
-        <div class="logo">
-            📚 Digital Library
-        </div>
-
-        <div class="nav-links">
-
-            <a href="dashboard.html">
-                🏠 Dashboard
-            </a>
-
-            <a href="books.html">
-                📖 Browse Books
-            </a>
-
-            <a href="borrowed-books.html">
-                📚 My Borrowed Books
-            </a>
-
-            <button
-                class="logout-btn"
-                onclick="logoutUser()"
-            >
+        <nav id="mainNav">
+            <a href="dashboard.html" class="active">Dashboard</a>
+            <a href="books.html">Browse Books</a>
+            <a href="borrowed-books.html">My Loans</a>
+            <button class="logout-btn" onclick="logoutUser()">
                 🚪 Logout
             </button>
+        </nav>
+    </header>
 
-        </div>
-
-    </nav>
-
-
-
-    <!-- =========================
-         MAIN DASHBOARD
-         ========================= -->
-
+    <!-- Main Dashboard Container -->
     <main class="dashboard-container">
 
-
-        <!-- Welcome -->
-
+        <!-- Welcome Banner -->
         <section class="welcome-section">
-
             <h1>
-                Welcome back,
-                <span id="userName">User</span>! 👋
+                Welcome back, <span id="userName">Reader</span>! 👋
             </h1>
-
             <p>
-                Manage your digital library,
-                browse books and track your borrowed books.
+                Manage your digital library, browse the latest technical collections, and track your active book loans in real time.
             </p>
-
         </section>
 
-
-
-        <!-- Account Information -->
-
+        <!-- Account Information Card -->
         <h2 class="section-title">
-            👤 Account Information
+            <span>👤</span> Account Information
         </h2>
 
         <section class="account-card">
-
             <div class="account-row">
 
-
                 <div class="account-item">
-
-                    <div class="account-label">
-                        Name
-                    </div>
-
-                    <div
-                        class="account-value"
-                        id="dashboardName"
-                    >
+                    <div class="account-label">Full Name</div>
+                    <div class="account-value" id="dashboardName">
                         Loading...
                     </div>
-
                 </div>
 
-
-
                 <div class="account-item">
-
-                    <div class="account-label">
-                        Email
-                    </div>
-
-                    <div
-                        class="account-value"
-                        id="dashboardEmail"
-                    >
+                    <div class="account-label">Registered Email</div>
+                    <div class="account-value" id="dashboardEmail">
                         Loading...
                     </div>
-
                 </div>
 
-
-
                 <div class="account-item">
-
-                    <div class="account-label">
-                        Account Type
+                    <div class="account-label">Account Privilege</div>
+                    <div class="account-value">
+                        <span class="role-badge" id="dashboardRole">
+                            Loading...
+                        </span>
                     </div>
-
-                    <div
-                        class="account-value"
-                        id="dashboardRole"
-                    >
-                        Loading...
-                    </div>
-
                 </div>
 
             </div>
-
         </section>
 
-
-
-        <!-- Library Actions -->
-
+        <!-- Quick Library Actions -->
         <h2 class="section-title">
-            📚 Library Actions
+            <span>⚡</span> Quick Library Actions
         </h2>
 
         <section class="actions-grid">
 
-
-            <!-- Browse Books -->
-
+            <!-- Browse Books Action -->
             <div class="action-card">
-
-                <div class="action-icon">
-                    📖
-                </div>
-
-                <h3>
-                    Browse Books
-                </h3>
-
+                <div class="action-icon">📖</div>
+                <h3>Browse Library Books</h3>
                 <p>
-                    Explore the available books
-                    in the digital library.
+                    Explore hundreds of computer science, data, and web development books ready to read or borrow.
                 </p>
-
-                <a
-                    href="books.html"
-                    class="action-btn"
-                >
+                <a href="books.html" class="action-btn">
                     Browse Books →
                 </a>
-
             </div>
 
-
-
-            <!-- Borrowed Books -->
-
+            <!-- Borrowed Books Action -->
             <div class="action-card">
-
-                <div class="action-icon">
-                    📚
-                </div>
-
-                <h3>
-                    My Borrowed Books
-                </h3>
-
+                <div class="action-icon">📚</div>
+                <h3>My Borrowed Books</h3>
                 <p>
-                    View the books you have borrowed
-                    and return them when you're done.
+                    Check the status of your currently borrowed books, return completed books, or jump back into reading.
                 </p>
-
-                <a
-                    href="borrowed-books.html"
-                    class="action-btn"
-                >
-                    View My Books →
+                <a href="borrowed-books.html" class="action-btn">
+                    View My Loans →
                 </a>
-
             </div>
 
-
         </section>
 
-
-
-        <!-- Library Information -->
-
+        <!-- Platform Information Card -->
         <section class="info-card">
-
-            <h2>
-                💡 Digital Library
-            </h2>
-
+            <h2>💡 Digital Library Benefits</h2>
             <p>
-                Welcome to your Digital Library Management System.
-                You can browse books, search for books, borrow
-                available books and manage your borrowed books
-                from your dashboard.
+                Your library account grants you 24/7 access to full chapter texts, interactive digital reading modes, and instantaneous borrowing. Remember to return borrowed books once you've finished reading so fellow students can access them!
             </p>
-
         </section>
-
 
     </main>
 
-
-
-    <!-- =========================
-         FOOTER
-         ========================= -->
-
+    <!-- Footer -->
     <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>📚 Digital Library</h3>
+                <p>
+                    Your gateway to knowledge and digital learning. Explore, borrow, and read books seamlessly on any device.
+                </p>
+            </div>
 
-        <p>
-            © 2026 Digital Library Management System
-        </p>
+            <div class="footer-section">
+                <h3>Quick Navigation</h3>
+                <a href="dashboard.html">Dashboard</a>
+                <a href="books.html">Browse Books</a>
+                <a href="borrowed-books.html">My Loans</a>
+                <a href="index.html">Home Page</a>
+            </div>
 
+            <div class="footer-section">
+                <h3>Contact & Support</h3>
+                <p>Email: library@example.com</p>
+                <p>Phone: +91 98765 43210</p>
+                <p>Campus Center, Knowledge Ave.</p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2026 Digital Library Management System. All rights reserved.</p>
+        </div>
     </footer>
 
-
-
-    <!-- Existing JavaScript -->
-
+    <!-- JavaScript -->
     <script src="script.js"></script>
 
-
-    <!-- Dashboard Protection -->
-
+    <!-- Dashboard Session Protection & Loader -->
     <script>
-
-        protectPage().then(function(isLoggedIn) {
-
+        protectPage().then(function (isLoggedIn) {
             if (isLoggedIn) {
-
                 loadDashboard();
-
             }
-
         });
-
     </script>
-
-
 </body>
 
 </html>

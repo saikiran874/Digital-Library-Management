@@ -4,400 +4,305 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Digital Library Management System</title>
-
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <!-- Header -->
+    <!-- Header / Navbar -->
     <header>
+        <a href="index.html" class="logo-link">
+            <span class="logo-badge">📚</span>
+            <h1>Digital Library</h1>
+        </a>
 
-        <h1>Digital Library</h1>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle Navigation">
+            ☰
+        </button>
 
-        <nav>
-            <a href="#home">Home</a>
+        <nav id="mainNav">
+            <a href="index.html" class="active">Home</a>
             <a href="books.html">Books</a>
             <a href="#categories">Categories</a>
             <a href="#about">About</a>
-            <a href="login.html">Login</a>
+            <a href="login.html" class="nav-cta" id="navAuthBtn">Login</a>
         </nav>
-
     </header>
-
 
     <main>
 
         <!-- Hero Section -->
         <section class="hero" id="home">
+            <div class="hero-pill">
+                <span>✨</span> Modern Digital Learning Platform
+            </div>
 
-            <h2>Discover Knowledge, Anytime, Anywhere</h2>
+            <h2>
+                Discover a World of <span class="highlight">Knowledge & Wisdom</span>
+            </h2>
 
             <p>
-                Explore books and digital resources from our online library.
+                Explore books, learn in-demand skills, and expand your knowledge with our comprehensive digital library. Accessible anytime, anywhere.
             </p>
 
-            <button onclick="exploreBooks()">
-                Explore Books
-            </button>
-
+            <div class="hero-actions">
+                <button onclick="exploreBooks()">
+                    <span>📚</span> Explore Books
+                </button>
+                <a href="#categories" class="btn-secondary-hero">
+                    <span>🔍</span> Browse Categories
+                </a>
+            </div>
         </section>
-
 
         <!-- Search Section -->
         <section class="search-section">
+            <div class="search-container-inner">
+                <h2>Find Your Next Book</h2>
+                <p>
+                    Search across our catalog of computer science, data, AI, and web development books.
+                </p>
 
-            <h2>Find Your Next Book</h2>
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Search by book title, author, or category..."
+                    >
+                    <button onclick="searchBooks()">
+                        Search
+                    </button>
+                </div>
 
-            <p>
-                Search our digital library for books and resources.
-            </p>
-
-            <div class="search-box">
-
-                <input
-                    type="text"
-                    id="searchInput"
-                    placeholder="Search for a book..."
-                >
-
-                <button onclick="searchBooks()">
-                    Search
-                </button>
-
+                <div id="searchResult"></div>
             </div>
-
-            <p id="searchResult"></p>
-
         </section>
-
 
         <!-- Featured Books Section -->
         <section class="featured-books" id="books">
-
-            <h2>Featured Books</h2>
-
-            <p>
-                Explore some of our popular books.
-            </p>
+            <div class="section-header">
+                <span class="section-tag">Curated Picks</span>
+                <h2>Featured Books</h2>
+                <p>Explore some of our most popular learning resources.</p>
+            </div>
 
             <div class="book-container">
 
-
                 <!-- Book 1 -->
                 <div class="book-card">
-
-                    <div class="book-cover">
-                        📘
+                    <div class="book-cover cover-cs">
+                        🐍
                     </div>
-
+                    <span class="book-category">Category: Computer Science</span>
                     <h3>Python Programming</h3>
-
                     <p>
-                        Learn Python from the basics.
+                        Master Python fundamentals, object-oriented concepts, and advanced scripting techniques.
                     </p>
-
-                    <a href="book-details.html?book=python" class="view-book">
-                        View Book
-                    </a>
-
+                    <p>
+                        <span class="badge-available">Available</span>
+                    </p>
+                    <div class="book-buttons">
+                        <a href="book-details.html?book=python" class="view-book">
+                            View Book
+                        </a>
+                    </div>
                 </div>
-
 
                 <!-- Book 2 -->
                 <div class="book-card">
-
-                    <div class="book-cover">
-                        📗
+                    <div class="book-cover cover-web">
+                        🌐
                     </div>
-
+                    <span class="book-category">Category: Web Development</span>
                     <h3>Web Development</h3>
-
                     <p>
-                        Learn HTML, CSS and JavaScript.
+                        Build modern, responsive web applications using HTML5, modern CSS, and JavaScript.
                     </p>
-
-                    <a href="book-details.html?book=web" class="view-book">
-                        View Book
-                    </a>
-
+                    <p>
+                        <span class="badge-available">Available</span>
+                    </p>
+                    <div class="book-buttons">
+                        <a href="book-details.html?book=web" class="view-book">
+                            View Book
+                        </a>
+                    </div>
                 </div>
-
 
                 <!-- Book 3 -->
                 <div class="book-card">
-
-                    <div class="book-cover">
-                        📕
+                    <div class="book-cover cover-data">
+                        📊
                     </div>
-
+                    <span class="book-category">Category: Data Science</span>
                     <h3>Data Science</h3>
-
                     <p>
-                        Explore data analysis and visualization.
+                        Explore data analysis, visual storytelling, machine models, and real-world statistics.
                     </p>
-
-                    <a href="book-details.html?book=data" class="view-book">
-                        View Book
-                    </a>
-
+                    <p>
+                        <span class="badge-available">Available</span>
+                    </p>
+                    <div class="book-buttons">
+                        <a href="book-details.html?book=data" class="view-book">
+                            View Book
+                        </a>
+                    </div>
                 </div>
 
+                <!-- Book 4 -->
+                <div class="book-card">
+                    <div class="book-cover cover-ai">
+                        🤖
+                    </div>
+                    <span class="book-category">Category: Artificial Intelligence</span>
+                    <h3>Artificial Intelligence</h3>
+                    <p>
+                        Learn core AI concepts, neural networks, machine learning algorithms, and real-world applications.
+                    </p>
+                    <p>
+                        <span class="badge-available">Available</span>
+                    </p>
+                    <div class="book-buttons">
+                        <a href="book-details.html?book=ai" class="view-book">
+                            View Book
+                        </a>
+                    </div>
+                </div>
 
             </div>
-
         </section>
-
 
         <!-- Categories Section -->
         <section class="categories" id="categories">
-
-            <h2>Browse Categories</h2>
-
-            <p>
-                Explore books by category.
-            </p>
-
-            <div class="category-container">
-
-
-                <!-- Category 1 -->
-                <div
-                    class="category-card"
-                    onclick="openCategory('Computer Science')"
-                    style="cursor: pointer;"
-                >
-
-                    <div class="category-icon">
-                        💻
-                    </div>
-
-                    <h3>Computer Science</h3>
-
-                    <p>
-                        Programming and technology books.
-                    </p>
-
+            <div class="categories-inner">
+                <div class="section-header">
+                    <span class="section-tag">Disciplines</span>
+                    <h2>Browse by Category</h2>
+                    <p>Dive deep into our curated collections across cutting-edge technical domains.</p>
                 </div>
 
+                <div class="category-container">
 
-                <!-- Category 2 -->
-                <div
-                    class="category-card"
-                    onclick="openCategory('Artificial Intelligence')"
-                    style="cursor: pointer;"
-                >
-
-                    <div class="category-icon">
-                        🤖
+                    <!-- Category 1 -->
+                    <div
+                        class="category-card"
+                        onclick="openCategory('Computer Science')"
+                    >
+                        <div class="category-icon">💻</div>
+                        <h3>Computer Science</h3>
+                        <p>Core programming, algorithms, database management, and computing principles.</p>
+                        <div class="category-cta">Explore Books →</div>
                     </div>
 
-                    <h3>Artificial Intelligence</h3>
-
-                    <p>
-                        AI and machine learning resources.
-                    </p>
-
-                </div>
-
-
-                <!-- Category 3 -->
-                <div
-                    class="category-card"
-                    onclick="openCategory('Data Science')"
-                    style="cursor: pointer;"
-                >
-
-                    <div class="category-icon">
-                        📊
+                    <!-- Category 2 -->
+                    <div
+                        class="category-card"
+                        onclick="openCategory('Artificial Intelligence')"
+                    >
+                        <div class="category-icon">🤖</div>
+                        <h3>Artificial Intelligence</h3>
+                        <p>Machine learning, intelligent systems, deep neural architectures, and vision models.</p>
+                        <div class="category-cta">Explore Books →</div>
                     </div>
 
-                    <h3>Data Science</h3>
-
-                    <p>
-                        Data analysis and visualization books.
-                    </p>
-
-                </div>
-
-
-                <!-- Category 4 -->
-                <div
-                    class="category-card"
-                    onclick="openCategory('Web Development')"
-                    style="cursor: pointer;"
-                >
-
-                    <div class="category-icon">
-                        🌐
+                    <!-- Category 3 -->
+                    <div
+                        class="category-card"
+                        onclick="openCategory('Data Science')"
+                    >
+                        <div class="category-icon">📊</div>
+                        <h3>Data Science</h3>
+                        <p>Big data analytics, visualization pipelines, predictive modeling, and statistics.</p>
+                        <div class="category-cta">Explore Books →</div>
                     </div>
 
-                    <h3>Web Development</h3>
-
-                    <p>
-                        HTML, CSS, JavaScript and web books.
-                    </p>
+                    <!-- Category 4 -->
+                    <div
+                        class="category-card"
+                        onclick="openCategory('Web Development')"
+                    >
+                        <div class="category-icon">🌐</div>
+                        <h3>Web Development</h3>
+                        <p>Full-stack web applications, modern frontends, scalable APIs, and system design.</p>
+                        <div class="category-cta">Explore Books →</div>
+                    </div>
 
                 </div>
-
-
             </div>
-
         </section>
-
 
         <!-- Library Statistics Section -->
         <section class="library-stats">
-
-            <h2>Our Library</h2>
-
-            <p>
-                Explore our growing digital library.
-            </p>
+            <h2>Our Library at a Glance</h2>
+            <p>Empowering students, researchers, and developers worldwide.</p>
 
             <div class="stats-container">
-
                 <div class="stat-card">
-
                     <h3>1,000+</h3>
-
-                    <p>
-                        Books
-                    </p>
-
+                    <p>Digital Volumes</p>
                 </div>
-
-
                 <div class="stat-card">
-
                     <h3>50+</h3>
-
-                    <p>
-                        Categories
-                    </p>
-
+                    <p>Categories</p>
                 </div>
-
-
                 <div class="stat-card">
-
                     <h3>500+</h3>
-
-                    <p>
-                        Registered Users
-                    </p>
-
+                    <p>Active Readers</p>
                 </div>
-
-
                 <div class="stat-card">
-
                     <h3>24/7</h3>
-
-                    <p>
-                        Access
-                    </p>
-
+                    <p>Online Access</p>
                 </div>
-
             </div>
-
         </section>
-
 
         <!-- About Section -->
         <section class="about-section" id="about">
-
             <h2>About Our Digital Library</h2>
-
             <p>
-                Our Digital Library Management System provides
-                easy access to books and digital learning resources
-                anytime and anywhere.
+                Our Digital Library Management System provides instant, seamless access to academic books and digital learning resources anytime and anywhere.
             </p>
-
             <p>
-                Users can search for books, explore different
-                categories, and access library resources through
-                a simple and user-friendly platform.
+                Engineered with performance and user experience in mind, users can explore extensive catalogs, read online with an intuitive reader, borrow literature, and manage book loans through a modern, responsive platform.
             </p>
-
         </section>
 
     </main>
 
-
     <!-- Footer -->
     <footer>
-
         <div class="footer-content">
-
-
-            <!-- Footer Section 1 -->
             <div class="footer-section">
-
-                <h3>Digital Library</h3>
-
+                <h3>📚 Digital Library</h3>
                 <p>
-                    Your gateway to knowledge and digital resources.
+                    Your gateway to knowledge and digital learning. Explore, borrow, and read books seamlessly on any device.
                 </p>
-
             </div>
 
-
-            <!-- Footer Section 2 -->
             <div class="footer-section">
-
-                <h3>Quick Links</h3>
-
+                <h3>Quick Navigation</h3>
                 <a href="#home">Home</a>
-
-                <a href="books.html">Books</a>
-
+                <a href="books.html">Browse Books</a>
                 <a href="#categories">Categories</a>
-
-                <a href="#about">About</a>
-
+                <a href="#about">About Platform</a>
             </div>
 
-
-            <!-- Footer Section 3 -->
             <div class="footer-section">
-
-                <h3>Contact</h3>
-
-                <p>
-                    Email: library@example.com
-                </p>
-
-                <p>
-                    Phone: +91 98765 43210
-                </p>
-
+                <h3>Contact & Support</h3>
+                <p>Email: library@example.com</p>
+                <p>Phone: +91 98765 43210</p>
+                <p>Campus Center, Knowledge Ave.</p>
             </div>
-
-
         </div>
 
-
-        <!-- Footer Bottom -->
         <div class="footer-bottom">
-
-            <p>
-                © 2026 Digital Library Management System.
-                All rights reserved.
-            </p>
-
+            <p>© 2026 Digital Library Management System. All rights reserved.</p>
         </div>
-
     </footer>
-
 
     <!-- JavaScript -->
     <script src="script.js"></script>
-
 </body>
 
 </html>

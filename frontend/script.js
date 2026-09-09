@@ -35,7 +35,7 @@ function searchBooks() {
     if (searchText === "") {
 
         searchResult.innerHTML =
-            "Please enter a book name or topic.";
+            "<p style='color: var(--accent); font-weight: 600; text-align: center;'>Please enter a book name, author, or topic to search.</p>";
 
         return;
     }
@@ -49,7 +49,7 @@ function searchBooks() {
             if (!result.success) {
 
                 searchResult.innerHTML =
-                    "Unable to search books.";
+                    "<p style='color: var(--danger); text-align: center;'>Unable to search books at this time.</p>";
 
                 return;
             }
@@ -72,10 +72,11 @@ function searchBooks() {
             if (matchedBooks.length === 0) {
 
                 searchResult.innerHTML = `
-                    <p>
-                        No books found for
-                        "<strong>${searchText}</strong>"
-                    </p>
+                    <div class="search-results" style="text-align: center;">
+                        <p style="color: var(--text-muted); font-size: 1.05rem;">
+                            No books found matching "<strong>${searchText}</strong>". Try searching for another topic or author.
+                        </p>
+                    </div>
                 `;
 
                 return;
@@ -86,8 +87,7 @@ function searchBooks() {
                 <div class="search-results">
 
                     <h3>
-                        ${matchedBooks.length}
-                        book(s) found
+                        Found ${matchedBooks.length} Matching Book${matchedBooks.length === 1 ? '' : 's'}
                     </h3>
 
                     <div class="book-container">
@@ -95,37 +95,46 @@ function searchBooks() {
                         ${matchedBooks.map(function(book) {
 
                             let bookKey = getBookKey(book.title);
+                            if (!bookKey) {
+                                bookKey = book.book_id;
+                            }
+
+                            let bookIcon = "📘";
+                            let coverClass = "cover-cs";
+                            if (book.category === "Artificial Intelligence") { bookIcon = "🤖"; coverClass = "cover-ai"; }
+                            else if (book.category === "Data Science") { bookIcon = "📊"; coverClass = "cover-data"; }
+                            else if (book.category === "Web Development") { bookIcon = "🌐"; coverClass = "cover-web"; }
+                            else if (book.title && book.title.includes("Python")) { bookIcon = "🐍"; coverClass = "cover-cs"; }
+
+                            let statusBadge = book.availability === "Available"
+                                ? `<span class="badge-available">Available</span>`
+                                : `<span class="badge-borrowed">Borrowed</span>`;
 
                             return `
                                 <div class="book-card">
 
-                                    <div class="book-cover">
-                                        📚
+                                    <div class="book-cover ${coverClass}">
+                                        ${bookIcon}
                                     </div>
+
+                                    <span class="book-category">
+                                        Category: ${book.category || "General"}
+                                    </span>
 
                                     <h3>
                                         ${book.title}
                                     </h3>
 
-                                    <p>
-                                        Author:
-                                        ${book.author}
+                                    <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 6px;">
+                                        <strong>Author:</strong> ${book.author}
                                     </p>
 
-                                    <p>
-                                        Category:
-                                        ${book.category || "General"}
+                                    <p style="font-size: 0.9rem; color: var(--text-muted); min-height: 40px;">
+                                        ${book.description || "Digital library learning resource."}
                                     </p>
 
-                                    <p>
-                                        ${book.description || ""}
-                                    </p>
-
-                                    <p>
-                                        Status:
-                                        <strong>
-                                            ${book.availability}
-                                        </strong>
+                                    <p style="margin-bottom: 12px;">
+                                        ${statusBadge}
                                     </p>
 
                                     <div class="book-buttons">
@@ -134,7 +143,7 @@ function searchBooks() {
                                             href="book-details.html?book=${bookKey}"
                                             class="view-book"
                                         >
-                                            View Book
+                                            View Details
                                         </a>
 
                                         ${
@@ -180,10 +189,11 @@ function searchBooks() {
             );
 
             searchResult.innerHTML = `
-                <p>
-                    Unable to connect to the server.
-                    Please make sure Flask is running.
-                </p>
+                <div class="search-results" style="text-align: center;">
+                    <p style="color: var(--danger);">
+                        Unable to connect to the server. Please make sure the Flask backend is running.
+                    </p>
+                </div>
             `;
 
         });
@@ -3370,7 +3380,7 @@ async function loadBooks() {
         if (!result.success) {
 
             booksContainer.innerHTML =
-                "<p>Unable to load books.</p>";
+                "<p style='text-align: center; color: var(--danger); padding: 40px 0;'>Unable to load books from server.</p>";
 
             return;
         }
@@ -3381,36 +3391,43 @@ async function loadBooks() {
 
             let bookKey = "";
             let bookIcon = "📘";
+            let coverClass = "cover-cs";
 
             if (book.title === "Python Programming") {
 
                 bookKey = "python";
                 bookIcon = "🐍";
+                coverClass = "cover-cs";
 
             } else if (book.title === "Web Development") {
 
                 bookKey = "web";
                 bookIcon = "🌐";
+                coverClass = "cover-web";
 
             } else if (book.title === "Data Science") {
 
                 bookKey = "data";
                 bookIcon = "📊";
+                coverClass = "cover-data";
 
             } else if (book.title === "Artificial Intelligence") {
 
                 bookKey = "ai";
                 bookIcon = "🤖";
+                coverClass = "cover-ai";
 
             } else if (book.title === "Java Programming") {
 
                 bookKey = "java";
                 bookIcon = "☕";
+                coverClass = "cover-cs";
 
             } else if (book.title === "Database Management") {
 
                 bookKey = "database";
                 bookIcon = "🗄️";
+                coverClass = "cover-cs";
 
             } else {
 
@@ -3457,30 +3474,34 @@ async function loadBooks() {
 
             bookCard.className = "book-card";
 
+            const statusBadge = book.availability === "Available"
+                ? `<span class="badge-available">Available</span>`
+                : `<span class="badge-borrowed">Borrowed</span>`;
+
             bookCard.innerHTML = `
 
-                <div class="book-cover">
+                <div class="book-cover ${coverClass}">
                     ${bookIcon}
                 </div>
+
+                <span class="book-category">
+                    Category: ${book.category || "General"}
+                </span>
 
                 <h3>
                     ${book.title}
                 </h3>
 
-                <p>
-                    ${book.description || "No description available."}
+                <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 6px;">
+                    <strong>Author:</strong> ${book.author}
                 </p>
 
-                <p class="book-category">
-                    Category: ${book.category || "General"}
+                <p style="font-size: 0.9rem; color: var(--text-muted); min-height: 44px;">
+                    ${book.description || "Digital library learning resource."}
                 </p>
 
-                <p>
-                    Author: ${book.author}
-                </p>
-
-                <p>
-                    Availability: ${book.availability}
+                <p style="margin-bottom: 12px;">
+                    ${statusBadge}
                 </p>
 
                 <div class="book-buttons">
@@ -3489,7 +3510,7 @@ async function loadBooks() {
                         href="book-details.html?book=${bookKey}"
                         class="view-book"
                     >
-                        View Book
+                        View Details
                     </a>
 
                     ${borrowButton}
@@ -3508,9 +3529,8 @@ async function loadBooks() {
 
         booksContainer.innerHTML = `
 
-            <p>
-                Unable to connect to the server.
-                Please make sure Flask is running.
+            <p style="text-align: center; color: var(--danger); grid-column: 1 / -1; padding: 40px 0;">
+                Unable to connect to the server. Please make sure the Flask backend is running.
             </p>
 
         `;
@@ -3588,7 +3608,7 @@ async function loadBorrowedBooks() {
         if (!result.success) {
 
             container.innerHTML = `
-                <p>${result.message}</p>
+                <p style="text-align: center; color: var(--danger); grid-column: 1 / -1; padding: 40px 0;">${result.message}</p>
             `;
 
             return;
@@ -3597,7 +3617,14 @@ async function loadBorrowedBooks() {
         if (result.books.length === 0) {
 
             container.innerHTML = `
-                <p>You have not borrowed any books yet.</p>
+                <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; background: var(--bg-surface); border-radius: var(--radius-lg); border: 1px solid var(--border-color);">
+                    <div style="font-size: 3.5rem; margin-bottom: 12px;">📖</div>
+                    <h3 style="font-size: 1.4rem; font-weight: 800; color: var(--text-main); margin-bottom: 8px;">No Borrowed Books Yet</h3>
+                    <p style="color: var(--text-muted); margin-bottom: 20px;">You do not have any active loans. Browse our collection to borrow your first book!</p>
+                    <a href="books.html" class="btn-primary" style="display: inline-flex;">
+                        Browse Library Catalog →
+                    </a>
+                </div>
             `;
 
             return;
@@ -3612,47 +3639,73 @@ async function loadBorrowedBooks() {
 
             bookCard.className = "book-card";
 
+            let bookIcon = "📘";
+            let coverClass = "cover-cs";
+
+            if (book.category === "Artificial Intelligence") {
+                bookIcon = "🤖";
+                coverClass = "cover-ai";
+            } else if (book.category === "Data Science") {
+                bookIcon = "📊";
+                coverClass = "cover-data";
+            } else if (book.category === "Web Development") {
+                bookIcon = "🌐";
+                coverClass = "cover-web";
+            } else if (book.title && book.title.includes("Python")) {
+                bookIcon = "🐍";
+                coverClass = "cover-cs";
+            }
+
+            const formattedDate = book.borrowed_date
+                ? new Date(book.borrowed_date).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })
+                : "Active Loan";
+
+            let bookKey = getBookKey(book.title);
+            if (!bookKey) {
+                bookKey = book.book_id;
+            }
+
             bookCard.innerHTML = `
 
-                <div class="book-cover">
-                    📚
+                <div class="book-cover ${coverClass}">
+                    ${bookIcon}
                 </div>
+
+                <span class="book-category">
+                    Category: ${book.category || "General"}
+                </span>
 
                 <h3>
                     ${book.title}
                 </h3>
 
-                <p>
-                    Author: ${book.author}
+                <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 6px;">
+                    <strong>Author:</strong> ${book.author}
                 </p>
 
-                <p>
-                    Category: ${book.category || "General"}
+                <p style="font-size: 0.85rem; color: var(--text-light); margin-bottom: 8px;">
+                    📅 <strong>Borrowed on:</strong> ${formattedDate}
                 </p>
 
-                <p>
-                    Borrowed Date:
-                    ${new Date(book.borrowed_date).toLocaleString()}
-                </p>
-
-                <p>
-                    Status: ${book.status}
+                <p style="margin-bottom: 12px;">
+                    <span class="badge-borrowed">Status: ${book.status}</span>
                 </p>
 
                 <div class="book-buttons">
 
                     <a
-                        href="book-details.html?book=${getBookKey(book.title)}"
+                        href="book-details.html?book=${bookKey}"
                         class="view-book"
                     >
-                        View Book
+                        View Details
                     </a>
 
                     <button
                         class="view-book"
+                        style="background: var(--accent-gradient); color: var(--text-white);"
                         onclick="returnBook(${book.book_id})"
                     >
-                        Return Book
+                        ↩️ Return Book
                     </button>
 
                 </div>
@@ -3671,9 +3724,8 @@ async function loadBorrowedBooks() {
         );
 
         container.innerHTML = `
-            <p>
-                Unable to connect to the server.
-                Please make sure Flask is running.
+            <p style="text-align: center; color: var(--danger); grid-column: 1 / -1; padding: 40px 0;">
+                Unable to connect to the server. Please make sure the Flask backend is running.
             </p>
         `;
     }
@@ -3843,6 +3895,8 @@ async function logoutUser() {
         const result =
             await response.json();
 
+        localStorage.removeItem("loggedInUser");
+
         if (result.success) {
 
             alert(
@@ -3867,6 +3921,8 @@ async function logoutUser() {
             error
         );
 
+        localStorage.removeItem("loggedInUser");
+
         alert(
             "Unable to connect to the server."
         );
@@ -3874,46 +3930,7 @@ async function logoutUser() {
     }
 
 }
-function filterBooks() {
 
-    const filter =
-        document.getElementById("categoryFilter").value;
-
-    const bookCards =
-        document.querySelectorAll(
-            "#booksContainer .book-card"
-        );
-
-    bookCards.forEach(function(card) {
-
-        const categoryElement =
-            card.querySelector(".book-category");
-
-        if (!categoryElement) {
-            return;
-        }
-
-        const category =
-            categoryElement.textContent
-                .replace("Category:", "")
-                .trim();
-
-        if (
-            filter === "all" ||
-            category.toLowerCase() ===
-            filter.toLowerCase()
-        ) {
-
-            card.style.display = "";
-
-        } else {
-
-            card.style.display = "none";
-
-        }
-
-    });
-}
 /* =========================================================
    21. CATEGORY FILTER
    ========================================================= */
@@ -3985,6 +4002,11 @@ function filterBooks() {
             noResults.id =
                 "noCategoryResults";
 
+            noResults.style.gridColumn = "1 / -1";
+            noResults.style.textAlign = "center";
+            noResults.style.padding = "40px 0";
+            noResults.style.color = "var(--text-muted)";
+
             noResults.textContent =
                 "No books found in this category.";
 
@@ -4000,6 +4022,7 @@ function filterBooks() {
     }
 
 }
+
 /* =========================================================
    22. LOGIN PROTECTION
    ========================================================= */
@@ -4039,11 +4062,46 @@ async function protectPage() {
         return false;
     }
 }
+
 /* =========================================================
-   AUTO LOAD BOOK DETAILS AND BOOK READER
+   AUTO LOAD BOOK DETAILS, BOOK READER & NAVBAR SYNC
    ========================================================= */
 
 document.addEventListener("DOMContentLoaded", function () {
+
+    // Mobile Navbar Toggle
+    const navToggle = document.getElementById("navToggle");
+    const mainNav = document.getElementById("mainNav");
+    if (navToggle && mainNav) {
+        navToggle.addEventListener("click", function () {
+            mainNav.classList.toggle("nav-open");
+        });
+    }
+
+    // Navbar Auth State Sync
+    const navAuthBtn = document.getElementById("navAuthBtn");
+    if (navAuthBtn) {
+        const storedUser = localStorage.getItem("loggedInUser");
+        if (storedUser) {
+            try {
+                const userObj = JSON.parse(storedUser);
+                navAuthBtn.textContent = "Dashboard";
+                navAuthBtn.href = "dashboard.html";
+            } catch (e) {}
+        }
+
+        // Also verify live session asynchronously
+        fetch("http://127.0.0.1:5000/session")
+            .then(function(res) { return res.json(); })
+            .then(function(sessionData) {
+                if (sessionData && sessionData.logged_in && sessionData.user) {
+                    navAuthBtn.textContent = "Dashboard";
+                    navAuthBtn.href = "dashboard.html";
+                    localStorage.setItem("loggedInUser", JSON.stringify(sessionData.user));
+                }
+            })
+            .catch(function() {});
+    }
 
     // Book Details Page
     if (
@@ -4063,6 +4121,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 });
+
 function openCategory(category) {
 
     window.location.href =

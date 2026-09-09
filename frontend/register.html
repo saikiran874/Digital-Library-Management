@@ -4,104 +4,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Register - Digital Library</title>
-
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <!-- Register Page -->
     <section class="login-page">
-
         <div class="login-container">
+            <a href="index.html" style="text-decoration: none;">
+                <div style="font-size: 2.5rem; margin-bottom: 8px;">📚</div>
+                <h1>Digital Library</h1>
+            </a>
 
-            <h1>Digital Library</h1>
-
-            <h2>Create Account</h2>
-
-            <p>
-                Register to access our digital library.
-            </p>
-
+            <h2>Join Our Library</h2>
+            <p>Create an account to borrow books and access e-learning materials.</p>
 
             <!-- Register Form -->
             <form id="registerForm">
-
                 <label for="name">
                     Full Name
                 </label>
-
                 <input
                     type="text"
                     id="name"
-                    placeholder="Enter your full name"
+                    placeholder="e.g. Alex Johnson"
+                    autocomplete="name"
                     required
                 >
 
-
                 <label for="registerEmail">
-                    Email
+                    Email Address
                 </label>
-
                 <input
                     type="email"
                     id="registerEmail"
-                    placeholder="Enter your email"
+                    placeholder="e.g. alex@example.com"
+                    autocomplete="email"
                     required
                 >
-
 
                 <label for="registerPassword">
                     Password
                 </label>
-
                 <input
                     type="password"
                     id="registerPassword"
-                    placeholder="Create a password"
+                    placeholder="Create a strong password"
+                    autocomplete="new-password"
                     required
                 >
-
 
                 <label for="confirmPassword">
                     Confirm Password
                 </label>
-
                 <input
                     type="password"
                     id="confirmPassword"
-                    placeholder="Confirm your password"
+                    placeholder="Repeat your password"
+                    autocomplete="new-password"
                     required
                 >
 
-
                 <button type="submit">
-                    Create Account
+                    Create Free Account
                 </button>
-
             </form>
-
 
             <p class="register-text">
                 Already have an account?
-                <a href="login.html">Login</a>
+                <a href="login.html">Sign In</a>
             </p>
 
-
             <a href="index.html" class="back-home">
-                ← Back to Home
+                ← Back to Home Page
             </a>
-
         </div>
-
     </section>
-
 
     <!-- JavaScript -->
     <script src="script.js"></script>
-
 </body>
 
 </html>

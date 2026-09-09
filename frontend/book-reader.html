@@ -2,207 +2,109 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Book Reader - Digital Library</title>
-
     <link rel="stylesheet" href="style.css">
-
 </head>
-
 
 <body>
 
-    <!-- Header -->
+    <!-- Header / Navbar -->
     <header>
-
-        <h1>Digital Library</h1>
-
-        <nav>
-
-            <a href="index.html">Home</a>
-
-            <a href="books.html">Books</a>
-
-            <a href="index.html#categories">Categories</a>
-
-            <a href="index.html#about">About</a>
-
-            <a href="login.html">Login</a>
-
-        </nav>
-
-    </header>
-
-
-    <!-- Reader Header -->
-    <section class="reader-header">
-
-        <h2 id="readerTitle">
-            Python Programming
-        </h2>
-
-        <p>
-            Digital Book Reader
-        </p>
-
-    </section>
-
-
-    <!-- Book Content -->
-    <main class="reader-page">
-
-        <!-- Reading Progress -->
-        <div class="reading-progress-container">
-
-            <div
-                class="reading-progress-bar"
-                id="readingProgress">
-            </div>
-
-        </div>
-
-
-        <!-- Complete Chapter Content -->
-        <article class="book-content" id="chapterContent">
-
-            <h2>
-                Chapter 1: Introduction to Python
-            </h2>
-
-            <h3>
-                1. What is Python?
-            </h3>
-
-            <p>
-                Python is a high-level, interpreted, general-purpose
-                programming language. It is known for its simple and
-                readable syntax, making it suitable for beginners as
-                well as experienced programmers.
-            </p>
-
-            <p>
-                Python is widely used in software development, data
-                science, artificial intelligence, automation, web
-                development, and many other areas.
-            </p>
-
-        </article>
-
-    </main>
-
-
-    <!-- Chapter Navigation -->
-    <div class="chapter-navigation">
-
-        <button
-            id="previousChapter"
-            onclick="previousChapter()">
-            ← Previous
-        </button>
-
-        <button
-            id="nextChapter"
-            onclick="nextChapter()">
-            Next →
-        </button>
-
-    </div>
-
-
-    <!-- Back Button -->
-    <div class="reader-back">
-
-        <a href="books.html">
-            ← Back to Books
+        <a href="index.html" class="logo-link">
+            <span class="logo-badge">📚</span>
+            <h1>Digital Library</h1>
         </a>
 
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle Navigation">
+            ☰
+        </button>
+
+        <nav id="mainNav">
+            <a href="index.html">Home</a>
+            <a href="books.html" class="active">Books</a>
+            <a href="index.html#categories">Categories</a>
+            <a href="index.html#about">About</a>
+            <a href="login.html" class="nav-cta" id="navAuthBtn">Login</a>
+        </nav>
+    </header>
+
+    <!-- Reader Sticky Header -->
+    <section class="reader-header">
+        <h2 id="readerTitle">
+            Digital Book Reader
+        </h2>
+        <p>Interactive E-Reader Mode</p>
+    </section>
+
+    <!-- Reading Progress Bar -->
+    <div class="reading-progress-container">
+        <div class="reading-progress-bar" id="readingProgress"></div>
     </div>
 
+    <!-- Reader Main Content -->
+    <main class="reader-page">
+        <article class="book-content" id="chapterContent">
+            <h2>Loading Chapter...</h2>
+            <p>Please wait while the book content is loaded.</p>
+        </article>
+
+        <!-- Chapter Navigation -->
+        <div class="chapter-navigation">
+            <button id="previousChapter" onclick="previousChapter()">
+                ← Previous Chapter
+            </button>
+
+            <button id="nextChapter" onclick="nextChapter()">
+                Next Chapter →
+            </button>
+        </div>
+
+        <!-- Back to Books -->
+        <div class="reader-back">
+            <a href="books.html">
+                ← Back to Library Catalog
+            </a>
+        </div>
+    </main>
 
     <!-- Footer -->
     <footer>
-
         <div class="footer-content">
-
-
-            <!-- Footer Section 1 -->
             <div class="footer-section">
-
-                <h3>Digital Library</h3>
-
+                <h3>📚 Digital Library</h3>
                 <p>
-                    Your gateway to knowledge and digital resources.
+                    Your gateway to knowledge and digital learning. Explore, borrow, and read books seamlessly on any device.
                 </p>
-
             </div>
 
-
-            <!-- Footer Section 2 -->
             <div class="footer-section">
-
-                <h3>Quick Links</h3>
-
-                <a href="index.html">
-                    Home
-                </a>
-
-                <a href="books.html">
-                    Books
-                </a>
-
-                <a href="index.html#categories">
-                    Categories
-                </a>
-
-                <a href="index.html#about">
-                    About
-                </a>
-
+                <h3>Quick Navigation</h3>
+                <a href="index.html">Home</a>
+                <a href="books.html">Browse Books</a>
+                <a href="index.html#categories">Categories</a>
+                <a href="index.html#about">About Platform</a>
             </div>
 
-
-            <!-- Footer Section 3 -->
             <div class="footer-section">
-
-                <h3>Contact</h3>
-
-                <p>
-                    Email: library@example.com
-                </p>
-
-                <p>
-                    Phone: +91 98765 43210
-                </p>
-
+                <h3>Contact & Support</h3>
+                <p>Email: library@example.com</p>
+                <p>Phone: +91 98765 43210</p>
+                <p>Campus Center, Knowledge Ave.</p>
             </div>
-
-
         </div>
 
-
-        <!-- Footer Bottom -->
         <div class="footer-bottom">
-
-            <p>
-                © 2026 Digital Library Management System.
-                All rights reserved.
-            </p>
-
+            <p>© 2026 Digital Library Management System. All rights reserved.</p>
         </div>
-
     </footer>
 
-
     <!-- JavaScript -->
-<script src="script.js"></script>
-
-<script>
-    loadBookReader();
-</script>
-
+    <script src="script.js"></script>
+    <script>
+        loadBookReader();
+    </script>
 </body>
+
 </html>

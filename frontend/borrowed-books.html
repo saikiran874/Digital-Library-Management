@@ -2,60 +2,93 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <title>My Borrowed Books</title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Borrowed Books - Digital Library</title>
     <link rel="stylesheet" href="style.css">
-
 </head>
 
 <body>
 
+    <!-- Header / Navbar -->
     <header>
-
-        <h1>My Borrowed Books</h1>
-
-        <a href="books.html" class="view-book">
-            Browse Books
+        <a href="index.html" class="logo-link">
+            <span class="logo-badge">📚</span>
+            <h1>Digital Library</h1>
         </a>
 
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle Navigation">
+            ☰
+        </button>
+
+        <nav id="mainNav">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="books.html">Browse Books</a>
+            <a href="borrowed-books.html" class="active">My Loans</a>
+            <button class="logout-btn" onclick="logoutUser()">Logout</button>
+        </nav>
     </header>
 
-
     <main>
-
-        <section class="books-section">
-
-            <h2>Books You Have Borrowed</h2>
-
-            <div id="borrowedBooksContainer">
-
-                <p>Loading borrowed books...</p>
-
+        <!-- Page Header Banner -->
+        <section class="books-header">
+            <div class="section-header" style="margin-bottom: 0;">
+                <span class="section-tag">Active Loans</span>
+                <h2>Books You Have Borrowed</h2>
+                <p>Track your active borrowings, read your digital books, or return them anytime.</p>
             </div>
-
         </section>
 
+        <!-- Borrowed Books Grid Section -->
+        <section class="books-section">
+            <div id="borrowedBooksContainer">
+                <p style="text-align: center; color: var(--text-muted); grid-column: 1 / -1; padding: 40px 0;">
+                    Loading your borrowed books...
+                </p>
+            </div>
+        </section>
     </main>
 
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>📚 Digital Library</h3>
+                <p>
+                    Your gateway to knowledge and digital learning. Explore, borrow, and read books seamlessly on any device.
+                </p>
+            </div>
 
-   <script src="script.js"></script>
+            <div class="footer-section">
+                <h3>Quick Navigation</h3>
+                <a href="dashboard.html">Dashboard</a>
+                <a href="books.html">Browse Books</a>
+                <a href="borrowed-books.html">My Borrowed Books</a>
+                <a href="index.html">Home Page</a>
+            </div>
 
-<script>
-    protectPage().then(function(isLoggedIn) {
+            <div class="footer-section">
+                <h3>Contact & Support</h3>
+                <p>Email: library@example.com</p>
+                <p>Phone: +91 98765 43210</p>
+                <p>Campus Center, Knowledge Ave.</p>
+            </div>
+        </div>
 
-        if (isLoggedIn) {
-            loadBorrowedBooks();
-        }
+        <div class="footer-bottom">
+            <p>© 2026 Digital Library Management System. All rights reserved.</p>
+        </div>
+    </footer>
 
-    });
-</script>
-
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+    <script>
+        protectPage().then(function (isLoggedIn) {
+            if (isLoggedIn) {
+                loadBorrowedBooks();
+            }
+        });
+    </script>
 </body>
 
 </html>
